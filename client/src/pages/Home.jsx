@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
 import { logout } from "../api/user"; // importe la fonction logout
+import VitrailUploader from "../components/vitrailUploader";
 
 const Home = () => {
   const { user, setUser } = useContext(UserContext);
@@ -41,6 +42,7 @@ const Home = () => {
                 <label htmlFor="" className="h4">
                   Welcome, {user.username}
                 </label>
+                <VitrailUploader />
                 <label htmlFor="" className="h4">
                   Role: {user.role}
                 </label>
@@ -51,12 +53,11 @@ const Home = () => {
             </div>
           ) : (
             <div>
-              <div className="text-center mb-5 alert alert-primary">
-                <label htmlFor="" className="h2">
-                  Welcome to the Home Page
-                </label>
+              <div className="text-center mb-5 ">
+                <h1>Bienvenue sur Divimo</h1>
+                <p>le site de Vitrail et de Mosaïque</p>
               </div>
-              <div className="form-group mb-3">
+              {/* <div className="form-group mb-3">
                 <Link to="/signup" className="btn btn-primary">
                   Signup
                 </Link>
@@ -68,7 +69,7 @@ const Home = () => {
               </div>
               <Link to="/login" className="btn btn-primary">
                 Login
-              </Link>
+              </Link> */}
             </div>
           )}
         </div>

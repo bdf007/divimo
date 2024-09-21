@@ -14,6 +14,8 @@ app.use(compression());
 
 // get the user routes
 const userRoutes = require("./routes/userLogin");
+// get the vitrail routes
+const vitrailRoutes = require("./routes/vitrail");
 
 // middleware
 app.use(json({ limit: "10mb" }));
@@ -41,6 +43,9 @@ app.get("/", (req, res) => {
 
 // User Routes
 app.use("/api", userRoutes);
+
+// vitrail routes
+app.use("/api", vitrailRoutes);
 
 // serve the react app
 app.get("*", (req, res) => {

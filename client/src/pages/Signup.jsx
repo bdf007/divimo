@@ -42,8 +42,6 @@ const Signup = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      // Vérifie les valeurs avant l'envoi
-      console.log({ username, firstname, lastname, email, password });
       const res = await register({
         username,
         firstname,
