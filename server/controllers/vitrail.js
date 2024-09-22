@@ -2,7 +2,6 @@ const Vitrail = require("../models/vitrail");
 
 exports.createVitrail = async (req, res) => {
   try {
-    console.log(req.body);
     const vitrail = new Vitrail(req.body);
     await vitrail.save();
     res.status(201).json(vitrail);

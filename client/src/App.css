@@ -6,6 +6,9 @@
   height: 40vmin;
   pointer-events: none;
 }
+.home {
+  width: 100vw;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -26,6 +29,23 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.vitrail-caroussel {
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  background-color: #a497f7;
+  margin: 0;
+  padding: 0 10rem;
+  color: white;
+}
+
+.vitrail-caroussel img {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
 }
 
 @keyframes App-logo-spin {

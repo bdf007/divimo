@@ -22,7 +22,7 @@ const NavBar = () => {
         // redirect to login page
         navigate("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.log(err));
   };
 
   useEffect(() => {

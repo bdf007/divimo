@@ -22,6 +22,6 @@ router.get("/vitrail/:id", getVitrailById);
 router.get("/vitrail/title/:title", getVitrailByTitle);
 router.get("/vitrail/category/:category", getVitrailByCategory);
 router.put("/vitrail/update/:id", verifyToken, updateVitrail);
-router.delete("/vitrail/delete/:id", verifyToken, deleteVitrail);
+router.delete("/vitrail/delete/:id", deleteVitrail);
 
 module.exports = router;

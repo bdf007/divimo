@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
 import { logout } from "../api/user"; // importe la fonction logout
 import VitrailUploader from "../components/vitrailUploader";
+import VitrailCaroussel from "../components/vitrailCaroussel";
 
 const Home = () => {
   const { user, setUser } = useContext(UserContext);
@@ -18,10 +19,10 @@ const Home = () => {
         setUser(null); // Efface l'utilisateur du contexte
         navigate("/"); // Redirige vers la page d'accueil
       } else {
-        console.error("Logout failed: ", res);
+        toast.error("Logout failed: ", res);
       }
     } catch (error) {
-      console.error("Error during logout: ", error);
+      toast.error("Error during logout: ", error);
     }
   };
 
@@ -34,18 +35,18 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="container mt-5 col-10 col-sm-8 col-md-6 col-lg-5">
-        <div className="form-group mb-3">
+      <div>
+        <div>
           {user ? (
-            <div>
-              <div>
+            <div className="container mt-5 col-10 col-sm-8 col-md-6 col-lg-5">
+              <div className="form-group mb-3">
                 <label htmlFor="" className="h4">
                   Welcome, {user.username}
                 </label>
-                <VitrailUploader />
                 <label htmlFor="" className="h4">
                   Role: {user.role}
                 </label>
+                <VitrailUploader />
               </div>
               <button className="btn btn-danger mt-3" onClick={handleLogout}>
                 Logout
@@ -56,20 +57,8 @@ const Home = () => {
               <div className="text-center mb-5 ">
                 <h1>Bienvenue sur Divimo</h1>
                 <p>le site de Vitrail et de Mosaïque</p>
+                <VitrailCaroussel />
               </div>
-              {/* <div className="form-group mb-3">
-                <Link to="/signup" className="btn btn-primary">
-                  Signup
-                </Link>
-              </div>
-              <div>
-                <label htmlFor="" className="h4">
-                  Please login to see your profile
-                </label>
-              </div>
-              <Link to="/login" className="btn btn-primary">
-                Login
-              </Link> */}
             </div>
           )}
         </div>

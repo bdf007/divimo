@@ -14,13 +14,13 @@ const VitrailUploader = () => {
   const [sold, setSold] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
   const [listOfVitrails, setListOfVitrails] = useState([]);
+  const [update, setUpdate] = useState(false);
 
   const getListOfVitrails = async () => {
     try {
       const res = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/vitrails`
       );
-      console.log(res.data);
       setListOfVitrails(res.data);
     } catch (error) {
       toast.error("Error during fetching vitrails: ", error);
@@ -89,7 +89,6 @@ const VitrailUploader = () => {
         shipping,
         sold,
       };
-      console.log(vitrailData);
 
       const res = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/vitrail/create`,
@@ -100,18 +99,16 @@ const VitrailUploader = () => {
       getListOfVitrails();
       resetForm();
     } catch (error) {
-      console.error("Error during vitrail creation: ", error);
+      toast.error("Error during vitrail creation: ", error);
     }
   };
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     setSelectedFile(file);
   };
 
   const handleTitleChange = (e) => {
-    console.log(e.target.value);
     setTitle(e.target.value);
   };
 
@@ -150,6 +147,30 @@ const VitrailUploader = () => {
     setSelectedFile(null);
   };
 
+  const updateVitrail = async (id) => {
+    try {
+      const res = await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/vitrail/update/${id}`
+      );
+      toast.success(res.data.message);
+      getListOfVitrails();
+    } catch (error) {
+      toast.error("Error during vitrail update: ", error);
+    }
+  };
+
+  const deleteVitrail = async (id) => {
+    try {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_API_URL}/api/vitrail/delete/${id}`
+      );
+      toast.success(res.data.message);
+      getListOfVitrails();
+    } catch (error) {
+      toast.error("Error during vitrail deletion: ", error);
+    }
+  };
+
   useEffect(() => {
     getListOfVitrails();
   }, []);
@@ -184,101 +205,149 @@ const VitrailUploader = () => {
                   style={{ width: "100%", height: "auto" }}
                 />
               )}
+              {/* {update && (
+                <div>
+                  <input
+                    type="text"
+                    value={vitrail.title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    value={vitrail.description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                  <input
+                    type="number"
+                    value={vitrail.price}
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    value={vitrail.category}
+                    onChange={(e) => setCategory(e.target.value)}
+                  />
+                  <input
+                    type="number"
+                    value={vitrail.quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+                  <input
+                    type="checkbox"
+                    value={vitrail.shipping}
+                    onChange={(e) => setShipping(e.target.value)}
+                  />
+                  <input
+                    type="number"
+                    value={vitrail.sold}
+                    onChange={(e) => setSold(e.target.value)}
+                  />
+                  <button onClick={() => updateVitrail(vitrail._id)}>
+                    Save
+                  </button>
+                </div>
+              )}
+
+              {user && (
+                <button onClick={() => setUpdate(!update)}>Update</button>
+              )} */}
+              <button onClick={() => deleteVitrail(vitrail._id)}>Delete</button>
             </div>
           ))}
         </div>
       )}
+      {user && (
+        <form>
+          <h1>Uploader une image</h1>
+          <div className="form-group">
+            <label htmlFor="file">photo</label>
+            <input
+              type="file"
+              id="file"
+              accept="image/*"
+              className="form-control"
+              placeholer="photo"
+              onChange={handleFileInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="title">Titre</label>
+            <input
+              type="text"
+              id="title"
+              className="form-control"
+              placeholder="Titre"
+              onChange={handleTitleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <input
+              type="text"
+              id="description"
+              className="form-control"
+              placeholder="Description"
+              onChange={handleDescriptionChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="price">Prix</label>
+            <input
+              type="number"
+              id="price"
+              className="form-control"
+              placeholder="Prix"
+              onChange={handlePriceChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="category">Catégorie</label>
+            <input
+              type="text"
+              id="category"
+              className="form-control"
+              placeholder="Catégorie"
+              onChange={handleCategoryChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="quantity">Quantité</label>
+            <input
+              type="number"
+              id="quantity"
+              className="form-control"
+              placeholder="Quantité"
+              onChange={handleQuantityChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="shipping">Livraison</label>
+            <input
+              type="checkbox"
+              id="shipping"
+              className="form-control"
+              placeholder="Livraison"
+              onChange={handleShippingChange}
+            />
+          </div>
 
-      <form>
-        <h1>Uploader une image</h1>
-        <div className="form-group">
-          <label htmlFor="file">photo</label>
-          <input
-            type="file"
-            id="file"
-            accept="image/*"
-            className="form-control"
-            placeholer="photo"
-            onChange={handleFileInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="title">Titre</label>
-          <input
-            type="text"
-            id="title"
-            className="form-control"
-            placeholder="Titre"
-            onChange={handleTitleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="description">Description</label>
-          <input
-            type="text"
-            id="description"
-            className="form-control"
-            placeholder="Description"
-            onChange={handleDescriptionChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="price">Prix</label>
-          <input
-            type="number"
-            id="price"
-            className="form-control"
-            placeholder="Prix"
-            onChange={handlePriceChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="category">Catégorie</label>
-          <input
-            type="text"
-            id="category"
-            className="form-control"
-            placeholder="Catégorie"
-            onChange={handleCategoryChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="quantity">Quantité</label>
-          <input
-            type="number"
-            id="quantity"
-            className="form-control"
-            placeholder="Quantité"
-            onChange={handleQuantityChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="shipping">Livraison</label>
-          <input
-            type="checkbox"
-            id="shipping"
-            className="form-control"
-            placeholder="Livraison"
-            onChange={handleShippingChange}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="sold">Vendu</label>
+            <input
+              type="number"
+              id="sold"
+              className="form-control"
+              placeholder="Vendu"
+              onChange={handleSoldChange}
+            />
+          </div>
+          <br />
 
-        <div className="form-group">
-          <label htmlFor="sold">Vendu</label>
-          <input
-            type="number"
-            id="sold"
-            className="form-control"
-            placeholder="Vendu"
-            onChange={handleSoldChange}
-          />
-        </div>
-        <br />
-
-        <button type="submit" onClick={handleUploadVitrail}>
-          Envoyer
-        </button>
-      </form>
+          <button type="submit" onClick={handleUploadVitrail}>
+            Envoyer
+          </button>
+        </form>
+      )}
     </div>
   );
 };
