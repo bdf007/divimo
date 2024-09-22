@@ -19,7 +19,7 @@ const PublicVitrailPopup = ({ vitrail, onClose }) => {
           ) : (
             <p>{vitrail.description}</p>
           )}
-          {vitrail.price === 0 ? (
+          {vitrail.price === 0 || !vitrail.price ? (
             <p>contacter l'artiste pour le prix</p>
           ) : (
             <p>Prix: {vitrail.price} €</p>

@@ -46,11 +46,19 @@ exports.login = async (req, res) => {
     res.cookie("jwt", token, { expire: new Date() + 9999, httpOnly: true });
 
     // destructure user
-    const { _id, username, role } = user;
+    const { _id, username, role, firstname, lastname, email } = user;
     // console log the token for debugging
     return res.json({
       token,
-      user: { message: "Login success", _id, username, role },
+      user: {
+        message: "Login success",
+        _id,
+        username,
+        role,
+        firstname,
+        lastname,
+        email,
+      },
     });
   } catch (err) {
     console.error("Login error: ", err);
@@ -66,6 +74,7 @@ exports.logout = (req, res) => {
 exports.getLoggedInUser = (req, res) => {
   const { _id, username, firstname, lastname, email, role } = req.user;
   return res.status(200).json({
+    _id,
     username,
     firstname,
     lastname,

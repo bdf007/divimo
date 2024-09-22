@@ -99,12 +99,29 @@ const VitrailPopup = ({ vitrail, onClose, user, onUpdate }) => {
           </form>
         ) : (
           <div>
-            <h2>{vitrail.title}</h2>
-            <p>{vitrail.description}</p>
-            <p>{vitrail.price}</p>
-            <p>{vitrail.category}</p>
-            <p>{vitrail.quantity}</p>
-            <p>{vitrail.sold}</p>
+            <h2>titre: {vitrail.title}</h2>
+            {!vitrail.description ? (
+              <p>pas de description disponible</p>
+            ) : (
+              <p>description: {vitrail.description}</p>
+            )}
+            {!vitrail.price || vitrail.price === 0 ? (
+              <p> pas de prix renseigné</p>
+            ) : (
+              <p>prix: {vitrail.price}€</p>
+            )}
+            {!vitrail.category ? (
+              <p>pas de catégorie renseignée</p>
+            ) : (
+              <p>catégorie: {vitrail.category}</p>
+            )}
+            {!vitrail.quantity || vitrail.quantity === 0 ? (
+              <p>pas de quantité disponible</p>
+            ) : (
+              <p>quantité disponible: {vitrail.quantity}</p>
+            )}
+            {/* <p>{vitrail.sold}</p> */}
+
             <button onClick={() => setEditing(true)}>Edit</button>
           </div>
         )}

@@ -12,7 +12,7 @@ const VitrailUploader = () => {
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState(0);
   // const [shipping, setShipping] = useState(false);
-  const [sold, setSold] = useState(0);
+  // const [sold, setSold] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
   const [listOfVitrails, setListOfVitrails] = useState([]);
   const [selectedVitrail, setSelectedVitrail] = useState(null);
@@ -107,7 +107,7 @@ const VitrailUploader = () => {
         quantity,
         photo: resizedBase64Data,
         // shipping,
-        sold,
+        // sold,
       };
 
       const res = await axios.post(
@@ -152,9 +152,9 @@ const VitrailUploader = () => {
   //   setShipping(e.target.value);
   // };
 
-  const handleSoldChange = (e) => {
-    setSold(e.target.value);
-  };
+  // const handleSoldChange = (e) => {
+  //   setSold(e.target.value);
+  // };
 
   const resetForm = () => {
     setTitle("");
@@ -163,7 +163,7 @@ const VitrailUploader = () => {
     setCategory("");
     setQuantity(0);
     // setShipping(false);
-    setSold(0);
+    // setSold(0);
     setSelectedFile(null);
   };
 
@@ -308,7 +308,7 @@ const VitrailUploader = () => {
             />
           </div> */}
 
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="sold">Vendu</label>
             <input
               type="number"
@@ -317,7 +317,7 @@ const VitrailUploader = () => {
               placeholder="Vendu"
               onChange={handleSoldChange}
             />
-          </div>
+          </div> */}
           <br />
 
           <button type="submit" onClick={handleUploadVitrail}>

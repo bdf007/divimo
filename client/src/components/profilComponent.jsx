@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { logout } from "../api/user";
 import axios from "axios";
 import { getUser } from "../api/user";
 
@@ -32,7 +31,6 @@ const ProfilComponent = () => {
   const [updatePassword, setUpdatePassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isPasswordModified, setIsPasswordModified] = useState(false);
 
@@ -78,26 +76,8 @@ const ProfilComponent = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleShowConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-
-  const handleLogout = async (e) => {
+  const handleUpdateUser = async (e) => {
     e.preventDefault();
-    logout()
-      .then((res) => {
-        toast.success(res.message);
-        // set user to null
-        setUser(null);
-        // redirect to login page
-        navigate("/login");
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const handleUpdateUser = async () => {
-    // e.preventDefault();
-    console.log(user);
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/user/profile/${user._id}`,
@@ -117,7 +97,10 @@ const ProfilComponent = () => {
       );
       toast.success(res.data.message);
       setIsEditing(false);
-      getUser(setUser);
+      getUser();
+      if (res.data.message === "User profile updated successfully") {
+        navigate("/");
+      }
     } catch (error) {
       toast.error(error);
     }
@@ -362,9 +345,7 @@ const ProfilComponent = () => {
                     )}
                   </div>
                 </div>
-                <div>
-                  <p>en cas de modifications, vous devrez vous reconnecter</p>
-                </div>
+
                 <div className="text-center mt-4">
                   <button
                     className="btn btn-warning mb-4"
