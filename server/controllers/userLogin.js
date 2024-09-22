@@ -47,6 +47,7 @@ exports.login = async (req, res) => {
 
     // destructure user
     const { _id, username, role } = user;
+    // console log the token for debugging
     return res.json({
       token,
       user: { message: "Login success", _id, username, role },
@@ -63,20 +64,50 @@ exports.logout = (req, res) => {
 };
 
 exports.getLoggedInUser = (req, res) => {
-  const { username, role } = req.user;
+  const { _id, username, firstname, lastname, email, role } = req.user;
   return res.status(200).json({
     username,
     firstname,
     lastname,
+    email,
     role,
     message: "User is still logged in",
   });
+};
+
+exports.userById = async (req, res, next) => {
+  try {
+    const user = await User.findById(req._id).exec();
+    if (!user) {
+      return res.status(404).json({
+        error: "User not found",
+      });
+    }
+
+    req.user = user;
+    next();
+  } catch (err) {
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 exports.updateUser = async (req, res) => {
   try {
     const user = await UserLogin.findByIdAndUpdate(
       req.user._id,
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json({ message: "User updated successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+exports.updateUserById = async (req, res) => {
+  try {
+    const user = await UserLogin.findByIdAndUpdate(
+      req.params.id,
       { $set: req.body },
       { new: true }
     );
@@ -95,6 +126,15 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
+exports.deleteUserById = async (req, res) => {
+  try {
+    await UserLogin.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await UserLogin.find();
@@ -107,9 +147,11 @@ exports.getAllUsers = async (req, res) => {
 exports.getUserById = (req, res) => {
   const { username, role } = req.user;
   return res.status(200).json({
+    _id,
     username,
     firstname,
     lastname,
+    email,
     role,
     message: "User found",
   });
@@ -187,6 +229,39 @@ exports.getUserByFullname = async (req, res) => {
     }
     res.status(200).json(user);
   } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const _id = req.params.id;
+
+    // Retrieve the user from the database
+    const user = await UserLogin.findById(_id);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update user profile fields
+    user.username = req.body.username || user.username;
+    user.firstname = req.body.firstname || user.firstname;
+    user.lastname = req.body.lastname || user.lastname;
+    user.email = req.body.email || user.email;
+
+    // Check if a new password is provided
+    if (req.body.newPassword) {
+      // Update the user's password securely
+      user.setPassword(req.body.newPassword);
+    }
+
+    // Save the updated user profile
+    await user.save();
+
+    res.status(200).json({ message: "User profile updated successfully" });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 };

@@ -1,13 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Slider from "react-slick";
-import { Typography } from "@mui/material";
+import PublicVitrailPopup from "./publicVitrailPopup";
 import { toast } from "react-toastify";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const VitrailCaroussel = () => {
   const [listOfVitrails, setListOfVitrails] = useState([]);
+  const [selectedVitrail, setSelectedVitrail] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const openVitrailPopup = async (vitrailId) => {
+    try {
+      vitrailId = vitrailId._id;
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/vitrail/${vitrailId}`
+      );
+      setSelectedVitrail(res.data);
+      setShowPopup(true);
+    } catch (error) {
+      toast.error("Error during fetching vitrail: ", error);
+    }
+  };
+
+  const closeVitrailPopup = () => {
+    setSelectedVitrail(null);
+    setShowPopup(false);
+  };
 
   useEffect(() => {
     const getListOfVitrails = async () => {
@@ -57,13 +77,23 @@ const VitrailCaroussel = () => {
       <Slider {...settings}>
         {listOfVitrails.map((vitrail) => (
           <div key={vitrail._id}>
-            <img src={vitrail.photo} alt={vitrail.title} />
+            <img
+              src={vitrail.photo}
+              alt={vitrail.title}
+              onClick={() => openVitrailPopup(vitrail)}
+            />
             {/* <div className="vitrail-info">
               <Typography variant="h4">{vitrail.title}</Typography>
             </div> */}
           </div>
         ))}
       </Slider>
+      {showPopup && selectedVitrail && (
+        <PublicVitrailPopup
+          vitrail={selectedVitrail}
+          onClose={closeVitrailPopup}
+        />
+      )}
     </div>
   );
 };

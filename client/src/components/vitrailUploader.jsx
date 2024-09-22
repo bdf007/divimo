@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import VitrailPopup from "./vitrailPopup";
 
 const VitrailUploader = () => {
   const { user } = useContext(UserContext);
@@ -10,11 +11,12 @@ const VitrailUploader = () => {
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState(0);
-  const [shipping, setShipping] = useState(false);
+  // const [shipping, setShipping] = useState(false);
   const [sold, setSold] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
   const [listOfVitrails, setListOfVitrails] = useState([]);
-  const [update, setUpdate] = useState(false);
+  const [selectedVitrail, setSelectedVitrail] = useState(null);
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
 
   const getListOfVitrails = async () => {
     try {
@@ -25,6 +27,24 @@ const VitrailUploader = () => {
     } catch (error) {
       toast.error("Error during fetching vitrails: ", error);
     }
+  };
+
+  const openVitrailPopup = async (vitrailId) => {
+    try {
+      vitrailId = vitrailId._id;
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/vitrail/${vitrailId}`
+      );
+      setSelectedVitrail(res.data);
+      setIsOpenPopup(true);
+    } catch (error) {
+      toast.error("Error during fetching vitrail: ", error);
+    }
+  };
+
+  const closeVitrailPopup = () => {
+    setSelectedVitrail(null);
+    setIsOpenPopup(false);
   };
 
   const handleUploadVitrail = async (e) => {
@@ -86,7 +106,7 @@ const VitrailUploader = () => {
         category,
         quantity,
         photo: resizedBase64Data,
-        shipping,
+        // shipping,
         sold,
       };
 
@@ -128,9 +148,9 @@ const VitrailUploader = () => {
     setQuantity(e.target.value);
   };
 
-  const handleShippingChange = (e) => {
-    setShipping(e.target.value);
-  };
+  // const handleShippingChange = (e) => {
+  //   setShipping(e.target.value);
+  // };
 
   const handleSoldChange = (e) => {
     setSold(e.target.value);
@@ -142,21 +162,22 @@ const VitrailUploader = () => {
     setPrice(0);
     setCategory("");
     setQuantity(0);
-    setShipping(false);
+    // setShipping(false);
     setSold(0);
     setSelectedFile(null);
   };
 
-  const updateVitrail = async (id) => {
-    try {
-      const res = await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/vitrail/update/${id}`
-      );
-      toast.success(res.data.message);
-      getListOfVitrails();
-    } catch (error) {
-      toast.error("Error during vitrail update: ", error);
-    }
+  const updateVitrail = () => {
+    // try {
+    //   const res = await axios.put(
+    //     `${process.env.REACT_APP_API_URL}/api/vitrail/update/${id}`
+    //   );
+    //   toast.success(res.data.message);
+    //   getListOfVitrails();
+    // } catch (error) {
+    //   toast.error("Error during vitrail update: ", error);
+    // }
+    getListOfVitrails();
   };
 
   const deleteVitrail = async (id) => {
@@ -202,55 +223,11 @@ const VitrailUploader = () => {
                 <img
                   src={vitrail.photo}
                   alt={vitrail.title}
-                  style={{ width: "100%", height: "auto" }}
+                  style={{ width: "100%", height: "auto", cursor: "pointer" }} // Ajoute un curseur pour indiquer que l'image est cliquable
+                  onClick={() => openVitrailPopup(vitrail)} // Ouvre le popup lors du clic sur l'image
                 />
               )}
-              {/* {update && (
-                <div>
-                  <input
-                    type="text"
-                    value={vitrail.title}
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    value={vitrail.description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                  <input
-                    type="number"
-                    value={vitrail.price}
-                    onChange={(e) => setPrice(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    value={vitrail.category}
-                    onChange={(e) => setCategory(e.target.value)}
-                  />
-                  <input
-                    type="number"
-                    value={vitrail.quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                  />
-                  <input
-                    type="checkbox"
-                    value={vitrail.shipping}
-                    onChange={(e) => setShipping(e.target.value)}
-                  />
-                  <input
-                    type="number"
-                    value={vitrail.sold}
-                    onChange={(e) => setSold(e.target.value)}
-                  />
-                  <button onClick={() => updateVitrail(vitrail._id)}>
-                    Save
-                  </button>
-                </div>
-              )}
 
-              {user && (
-                <button onClick={() => setUpdate(!update)}>Update</button>
-              )} */}
               <button onClick={() => deleteVitrail(vitrail._id)}>Delete</button>
             </div>
           ))}
@@ -320,7 +297,7 @@ const VitrailUploader = () => {
               onChange={handleQuantityChange}
             />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="shipping">Livraison</label>
             <input
               type="checkbox"
@@ -329,7 +306,7 @@ const VitrailUploader = () => {
               placeholder="Livraison"
               onChange={handleShippingChange}
             />
-          </div>
+          </div> */}
 
           <div className="form-group">
             <label htmlFor="sold">Vendu</label>
@@ -347,6 +324,14 @@ const VitrailUploader = () => {
             Envoyer
           </button>
         </form>
+      )}
+      {isOpenPopup && selectedVitrail && (
+        <VitrailPopup
+          vitrail={selectedVitrail}
+          onClose={closeVitrailPopup}
+          user={user}
+          onUpdate={updateVitrail}
+        />
       )}
     </div>
   );

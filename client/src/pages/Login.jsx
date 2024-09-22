@@ -34,6 +34,8 @@ const Login = () => {
       if (res.error) toast.error(res.error);
       else {
         toast.success(res.message);
+        // store token in local storage
+        localStorage.setItem("token", res.token);
         // set user in context
         setUser({ username: res.user.username, role: res.user.role });
         // redirect to home page

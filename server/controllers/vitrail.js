@@ -60,9 +60,18 @@ exports.getVitrailByCategory = async (req, res) => {
 
 exports.updateVitrail = async (req, res) => {
   try {
-    const vitrail = await Vitrail.findByIdAndUpdate(req.params);
-    await vitrail.save();
-    res.status(200).json(vitrail);
+    const id = req.params.id;
+    const vitrailToUpdate = await Vitrail.findById(id);
+    if (!vitrailToUpdate) {
+      return res.status(404).json({ error: "Vitrail not found" });
+    }
+    const updatedVitrail = await Vitrail.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.status(200).json({
+      message: "vitrail updated successfully",
+      updatedVitrail: updatedVitrail,
+    });
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }

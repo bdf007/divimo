@@ -35,7 +35,7 @@ const NavBar = () => {
     <nav className="navbar navbar-expand-lg navbar-dark bg-black">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          Home
+          Acceuil
         </Link>
         <button
           className="navbar-toggler"
@@ -53,25 +53,40 @@ const NavBar = () => {
             {!user ? (
               <>
                 <li className="nav-item">
+                  <Link className="nav-link" to="/About">
+                    A propos
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <Link className="nav-link" to="/Signup">
-                    Sign up
+                    Créer un compte
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/Login">
-                    login
+                    Se connecter
                   </Link>
                 </li>
               </>
             ) : (
               <>
                 <li className="nav-item">
+                  <Link className="nav-link" to="/Profil">
+                    Profil
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/About">
+                    A propos
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <span
                     className="nav-link"
                     style={{ cursor: "pointer" }}
                     onClick={handleLogout}
                   >
-                    Logout
+                    déconnexion
                   </span>
                 </li>
               </>
