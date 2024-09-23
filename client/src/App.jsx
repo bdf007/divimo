@@ -17,6 +17,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import About from "./pages/About";
 import Profil from "./pages/Profil";
+import Review from "./pages/Review";
 
 // components
 import NavBar from "./components/navBar";
@@ -49,6 +50,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/about" element={<About />} />
             <Route path="/profil" element={<Profil />} />
+            <Route path="/review" element={<Review />} />
             <Route path="/" element={<Home />} />
           </Routes>
           <ToastContainer />

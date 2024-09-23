@@ -59,6 +59,14 @@
   display: block;
 }
 
+.review-carousel {
+  width: 100vw;
+  background-color: #f163cb;
+  margin: 0;
+  padding: 0 5rem;
+  color: white;
+}
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -82,11 +90,31 @@
   overflow-y: auto;
 }
 
+.form-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-check-label {
+  margin: 0 2rem;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .description {
+    font-size: 1.5rem;
+    white-space: pre-line;
+  }
+  .carousel {
+    padding: 0 2rem;
   }
 }

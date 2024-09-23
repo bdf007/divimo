@@ -6,12 +6,14 @@ import { logout } from "../api/user";
 import VitrailUploader from "./vitrailUploader";
 import VitrailCaroussel from "./vitrailCaroussel";
 import UserManagement from "./userManagement";
+import AdminReviewManagement from "./adminReviewManagement ";
 
 const Admin = () => {
   const { user, setUser } = useContext(UserContext);
   const [logoutMessage, setLogoutMessage] = useState("");
   const [showUploader, setShowUploader] = useState(false); // État pour afficher/masquer VitrailUploader
   const [showUserManagement, setShowUserManagement] = useState(false); // État pour afficher/masquer UserManagement
+  const [showReviewManagement, setShowReviewManagement] = useState(false); // État pour afficher/masquer ReviewManagement
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -40,12 +42,21 @@ const Admin = () => {
   const toggleUploader = () => {
     setShowUploader((prev) => !prev);
     setShowUserManagement(false); // Masque le UserManagement
+    setShowReviewManagement(false); // Masque le ReviewManagement
   };
 
   // Fonction pour basculer l'état d'affichage du UserManagement
   const toggleUserManagement = () => {
     setShowUserManagement((prev) => !prev);
     setShowUploader(false); // Masque le VitrailUploader
+    setShowReviewManagement(false); // Masque le ReviewManagement
+  };
+
+  // Fonction pour basculer l'état d'affichage du ReviewManagement
+  const toggleReviewManagement = () => {
+    setShowReviewManagement((prev) => !prev);
+    setShowUploader(false); // Masque le VitrailUploader
+    setShowUserManagement(false); // Masque le UserManagement
   };
 
   return (
@@ -69,6 +80,15 @@ const Admin = () => {
             ? "masquer la gestion des utilisateurs"
             : "Afficher la gestion des utilisateurs"}
         </button>
+        {/* Bouton pour afficher ou masquer le ReviewManagement */}
+        <button
+          className="btn btn-primary ms-3"
+          onClick={toggleReviewManagement}
+        >
+          {showReviewManagement
+            ? "masquer la gestion des avis"
+            : "Afficher la gestion des avis"}
+        </button>
 
         {/* Conditionnellement afficher le VitrailUploader */}
         {showUploader && (
@@ -80,6 +100,8 @@ const Admin = () => {
 
         {/* Conditionnellement afficher le UserManagement */}
         {showUserManagement && <UserManagement />}
+        {/* Conditionnellement afficher le ReviewManagement */}
+        {showReviewManagement && <AdminReviewManagement />}
       </div>
       <button className="btn btn-danger mt-3" onClick={handleLogout}>
         Logout

@@ -18,6 +18,8 @@ const userRoutes = require("./routes/userLogin");
 const vitrailRoutes = require("./routes/vitrail");
 // get the about routes
 const aboutRoutes = require("./routes/about");
+// get the review routes
+const reviewRoutes = require("./routes/review");
 
 // middleware
 app.use(json({ limit: "10mb" }));
@@ -38,10 +40,10 @@ conection();
 
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
-// Route de test
-app.get("/", (req, res) => {
-  res.send("API Running smoothly!");
-});
+// // Route de test
+// app.get("/", (req, res) => {
+//   res.send("API Running smoothly!");
+// });
 
 // User Routes
 app.use("/api", userRoutes);
@@ -51,6 +53,9 @@ app.use("/api", vitrailRoutes);
 
 // about routes
 app.use("/api", aboutRoutes);
+
+// review routes
+app.use("/api", reviewRoutes);
 
 // serve the react app
 app.get("*", (req, res) => {
