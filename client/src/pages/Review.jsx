@@ -153,6 +153,7 @@ const Review = () => {
             {userReview._id ? "Update" : "Submit"}
           </button>
         </form>
+        <p>Votre avis sera publié après vérification par un administrateur</p>
       </div>
     </div>
   );

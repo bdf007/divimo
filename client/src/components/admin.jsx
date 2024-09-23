@@ -7,6 +7,7 @@ import VitrailUploader from "./vitrailUploader";
 import VitrailCaroussel from "./vitrailCaroussel";
 import UserManagement from "./userManagement";
 import AdminReviewManagement from "./adminReviewManagement ";
+import ReviewCarousel from "./reviewCaroussel";
 
 const Admin = () => {
   const { user, setUser } = useContext(UserContext);
@@ -101,7 +102,12 @@ const Admin = () => {
         {/* Conditionnellement afficher le UserManagement */}
         {showUserManagement && <UserManagement />}
         {/* Conditionnellement afficher le ReviewManagement */}
-        {showReviewManagement && <AdminReviewManagement />}
+        {showReviewManagement && (
+          <div className="uploader-container">
+            <ReviewCarousel />
+            <AdminReviewManagement />
+          </div>
+        )}
       </div>
       <button className="btn btn-danger mt-3" onClick={handleLogout}>
         Logout

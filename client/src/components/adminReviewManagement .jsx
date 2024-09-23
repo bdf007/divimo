@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import StarIcon from "@mui/icons-material/Star";
-import ReviewCarousel from "./reviewCaroussel";
 
 const AdminReviewManagement = () => {
   const [reviews, setReviews] = useState([]);
@@ -82,9 +81,7 @@ const AdminReviewManagement = () => {
         Moyenne d'étoiles:{" "}
         {averageStars ? `${averageStars}/5` : "Aucune review validée"}
       </h3>
-      <div className="uploader-container">
-        <ReviewCarousel />
-      </div>
+
       {reviews.map((review) => (
         <div key={review._id} className="card mb-3">
           <div className="card-body">

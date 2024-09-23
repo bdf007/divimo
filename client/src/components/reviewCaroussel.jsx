@@ -14,7 +14,7 @@ const ReviewCarousel = () => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/review/visible`
+          `${process.env.REACT_APP_API_URL}/api/review/random`
         );
         console.log("Reviews fetched successfully:", response.data);
         setReviews(response.data);
@@ -25,6 +25,10 @@ const ReviewCarousel = () => {
 
     fetchReviews();
   }, []);
+
+  if (reviews.length === 0) {
+    return null; // Rien n'affiche si pas d'avis
+  }
 
   if (reviews.length === 1) {
     const review = reviews[0];
@@ -62,28 +66,7 @@ const ReviewCarousel = () => {
     autoplaySpeed: 2000,
   };
 
-  return reviews.length === 1 ? (
-    <div className="review-carousel">
-      <Typography variant="h6">{reviews[0].firstname}</Typography>
-      <Typography variant="h5">
-        <blockquote style={{ fontStyle: "italic" }}>
-          "{reviews[0].message}"
-        </blockquote>
-      </Typography>
-
-      <div className="star-rating">
-        {[...Array(5)].map((_, index) => (
-          <React.Fragment key={index}>
-            {index < reviews[0].star ? (
-              <StarIcon sx={{ color: "yellow", fontSize: 24 }} />
-            ) : (
-              <StarBorderIcon sx={{ color: "inherit", fontSize: 24 }} />
-            )}
-          </React.Fragment>
-        ))}
-      </div>
-    </div>
-  ) : (
+  return (
     <div className="review-carousel">
       <Slider {...settings}>
         {reviews.map((review) => (

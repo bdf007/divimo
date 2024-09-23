@@ -5,6 +5,7 @@ const router = express.Router();
 const {
   getReview,
   getReviewVisibleAndValidated,
+  getReviewRandom,
   getReviewByEmail,
   postReview,
   getReviewById,
@@ -23,6 +24,9 @@ router.get("/review", getReview);
 
 // get review page with visible and validated reviews
 router.get("/review/visible", getReviewVisibleAndValidated);
+
+// get 5 random reviews visble and validated for the home page
+router.get("/review/random", getReviewRandom);
 
 // get review by email of the user
 router.get("/review/email/:email", getReviewByEmail);

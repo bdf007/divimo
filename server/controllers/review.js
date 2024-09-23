@@ -53,6 +53,22 @@ exports.getReviewVisibleAndValidated = async (req, res) => {
   }
 };
 
+// get 5 random reviews visble and validated for the home page
+exports.getReviewRandom = async (req, res) => {
+  try {
+    const review = await Review.aggregate([
+      { $match: { visible: true, validation: true } },
+      { $sample: { size: 5 } },
+    ]);
+    res.json(review);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
 exports.postReview = async (req, res) => {
   try {
     // check if the email is already used

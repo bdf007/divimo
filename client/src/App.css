@@ -42,6 +42,11 @@
   margin-bottom: 20px; /* Ajouter un espace entre les éléments */
 }
 
+.uploader-container > .review-carousel {
+  width: 40vw; /* Prendre 100% de l'espace du conteneur */
+  margin-bottom: 20px; /* Ajouter un espace entre les éléments */
+}
+
 .vitrail-caroussel {
   justify-content: center;
   align-items: center;
@@ -116,5 +121,13 @@
   }
   .carousel {
     padding: 0 2rem;
+  }
+  .uploader-container > .vitrail-caroussel {
+    width: 100vw; /* Prendre 100% de l'espace du conteneur */
+    margin-bottom: 20px; /* Ajouter un espace entre les éléments */
+  }
+  .uploader-container > .review-carousel {
+    width: 100vw; /* Prendre 100% de l'espace du conteneur */
+    margin-bottom: 20px; /* Ajouter un espace entre les éléments */
   }
 }
