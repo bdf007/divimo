@@ -16,7 +16,6 @@ const ReviewCarousel = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/review/random`
         );
-        console.log("Reviews fetched successfully:", response.data);
         setReviews(response.data);
       } catch (error) {
         console.error("Error fetching reviews:", error);

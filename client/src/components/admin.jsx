@@ -8,6 +8,7 @@ import VitrailCaroussel from "./vitrailCaroussel";
 import UserManagement from "./userManagement";
 import AdminReviewManagement from "./adminReviewManagement ";
 import ReviewCarousel from "./reviewCaroussel";
+import AboutUploader from "./aboutUploader";
 
 const Admin = () => {
   const { user, setUser } = useContext(UserContext);
@@ -15,6 +16,7 @@ const Admin = () => {
   const [showUploader, setShowUploader] = useState(false); // État pour afficher/masquer VitrailUploader
   const [showUserManagement, setShowUserManagement] = useState(false); // État pour afficher/masquer UserManagement
   const [showReviewManagement, setShowReviewManagement] = useState(false); // État pour afficher/masquer ReviewManagement
+  const [showAboutUploader, setShowAboutUploader] = useState(false); // État pour afficher/masquer AboutUploader
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -44,6 +46,7 @@ const Admin = () => {
     setShowUploader((prev) => !prev);
     setShowUserManagement(false); // Masque le UserManagement
     setShowReviewManagement(false); // Masque le ReviewManagement
+    setShowAboutUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du UserManagement
@@ -51,6 +54,7 @@ const Admin = () => {
     setShowUserManagement((prev) => !prev);
     setShowUploader(false); // Masque le VitrailUploader
     setShowReviewManagement(false); // Masque le ReviewManagement
+    setShowAboutUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du ReviewManagement
@@ -58,6 +62,15 @@ const Admin = () => {
     setShowReviewManagement((prev) => !prev);
     setShowUploader(false); // Masque le VitrailUploader
     setShowUserManagement(false); // Masque le UserManagement
+    setShowAboutUploader(false); // Masque le AboutUploader
+  };
+
+  // Fonction pour basculer l'état d'affichage du AboutUploader
+  const toggleAboutUploader = () => {
+    setShowAboutUploader((prev) => !prev);
+    setShowUploader(false); // Masque le VitrailUploader
+    setShowUserManagement(false); // Masque le UserManagement
+    setShowReviewManagement(false); // Masque le ReviewManagement
   };
 
   return (
@@ -108,6 +121,14 @@ const Admin = () => {
             <AdminReviewManagement />
           </div>
         )}
+        {/* Conditionnellement afficher le AboutUploader */}
+        {showAboutUploader && <AboutUploader />}
+        {/* Bouton pour afficher ou masquer le AboutUploader */}
+        <button className="btn btn-primary ms-3" onClick={toggleAboutUploader}>
+          {showAboutUploader
+            ? "masquer l'ajout de la section À propos"
+            : "Afficher l'ajout de la section À propos"}
+        </button>
       </div>
       <button className="btn btn-danger mt-3" onClick={handleLogout}>
         Logout

@@ -18,6 +18,7 @@ const aboutSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+
     activeAbout: {
       type: Boolean,
       default: false,

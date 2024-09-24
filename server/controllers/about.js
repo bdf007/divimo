@@ -45,8 +45,12 @@ exports.getAboutActive = async (req, res) => {
   try {
     const about = await About.findOne({ activeAbout: true });
     if (!about) {
-      return res.status(404).json({ error: "Active about not found" });
+      // Si aucun about n'est trouvé, renvoyer un statut 200 avec un message informatif
+      return res
+        .status(200)
+        .json({ message: "No active about found", about: null });
     }
+    console.log(about);
     res.status(200).json(about);
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
@@ -74,6 +78,12 @@ exports.updateAbout = async (req, res) => {
 exports.deleteAbout = async (req, res) => {
   try {
     await About.findByIdAndDelete(req.params.id);
+    // if the deleted about was active, set the first about to active
+    const firstAbout = await About.findOne();
+    if (firstAbout) {
+      await About.findByIdAndUpdate(firstAbout._id, { activeAbout: true });
+    }
+
     res.status(200).json({ message: "About deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
