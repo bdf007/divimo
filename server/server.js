@@ -7,7 +7,6 @@ const path = require("path");
 const cors = require("cors");
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
-// const expressValidator = require("express-validator");
 
 // compress all responses
 app.use(compression());
@@ -20,6 +19,8 @@ const vitrailRoutes = require("./routes/vitrail");
 const aboutRoutes = require("./routes/about");
 // get the review routes
 const reviewRoutes = require("./routes/review");
+// get the category routes
+const categoryRoutes = require("./routes/category");
 
 // middleware
 app.use(json({ limit: "10mb" }));
@@ -31,7 +32,6 @@ app.use(
 );
 app.use(urlencoded({ limit: "10mb", extended: false }));
 app.use(cookieParser());
-// app.use(expressValidator());
 
 // Connect to database
 conection();
@@ -56,6 +56,9 @@ app.use("/api", aboutRoutes);
 
 // review routes
 app.use("/api", reviewRoutes);
+
+// category routes
+app.use("/api", categoryRoutes);
 
 // serve the react app
 app.get("*", (req, res) => {

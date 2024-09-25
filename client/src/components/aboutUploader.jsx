@@ -114,36 +114,50 @@ const AboutUploader = ({ onUpdate }) => {
   return (
     user &&
     (user.role === "admin" || user.role === "superadmin") && (
-      <div className="about-uploader">
-        <h2>About uploader</h2>
-        <div>
-          <h3>List of abouts</h3>
+      <div className="container mt-5">
+        <h3>Liste des "à propos" disponibles</h3>
+        <div className="row">
           {listOfAbouts.length === 0 ? (
-            <p>No abouts found</p>
+            <p>
+              Pas d'à propos disponible, utiliser le formulaire ci-desous pour
+              en créer un
+            </p>
           ) : (
-            <ul>
+            <div className="row">
               {listOfAbouts.map((about) => (
-                <li key={about._id}>
-                  {about.title} - {about.description} - {about.photo} -{" "}
-                  <span style={{ color: about.activeAbout ? "blue" : "red" }}>
-                    {about.activeAbout.toString()}
-                  </span>
-                  <br />
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => loadAboutForEditing(about)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => deleteAbout(about._id)}
-                  >
-                    Delete
-                  </button>
-                </li>
+                <div className="col-md-6 col-lg-4 mb-4" key={about._id}>
+                  <div className="card h-100">
+                    <div className="card-body">
+                      <h5 className="card-title">{about.title}</h5>
+                      <p className="card-text">{about.description}</p>
+                      <p>
+                        actif:{" "}
+                        <span
+                          style={{ color: about.activeAbout ? "blue" : "red" }}
+                        >
+                          {about.activeAbout.toString() === "true"
+                            ? "oui"
+                            : "non"}
+                        </span>
+                      </p>
+                      <br />
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => loadAboutForEditing(about)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => deleteAbout(about._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           )}
         </div>
         <form onSubmit={handleSubmit}>
@@ -183,18 +197,20 @@ const AboutUploader = ({ onUpdate }) => {
               onChange={(e) => setActiveAbout(e.target.checked)}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            {editingAboutId ? "Update" : "Upload"}
-          </button>
-          {editingAboutId && (
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={resetForm}
-            >
-              Cancel
+          <div className="d-flex justify-content-center">
+            <button type="submit" className="btn btn-primary">
+              {editingAboutId ? "Update" : "Upload"}
             </button>
-          )}
+            {editingAboutId && (
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={resetForm}
+              >
+                Cancel
+              </button>
+            )}
+          </div>
         </form>
       </div>
     )

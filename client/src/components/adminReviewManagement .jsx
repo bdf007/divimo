@@ -131,13 +131,14 @@ const AdminReviewManagement = () => {
                 }
               />
             </div>
-
-            <button
-              className="btn btn-danger"
-              onClick={() => handleDelete(review._id)}
-            >
-              Delete
-            </button>
+            <div className="d-flex justify-content-center">
+              <button
+                className="btn btn-danger"
+                onClick={() => handleDelete(review._id)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       ))}

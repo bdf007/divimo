@@ -12,7 +12,9 @@ const Review = () => {
   const [message, setMessage] = useState("");
   const { user } = useContext(UserContext);
   const [star, setStar] = useState(0);
+  const [userReviewID, setUserReviewID] = useState("");
   const [userReview, setUserReview] = useState([]);
+  const [userReviewExists, setUserReviewExists] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   useEffect(() => {
@@ -28,6 +30,8 @@ const Review = () => {
             setMessage(userReview.message);
             setStar(userReview.star);
             setUserReview(userReview);
+            // setUserReviewExists(true);
+            setUserReviewID(userReview._id);
           }
         });
     }
@@ -40,33 +44,67 @@ const Review = () => {
   const handleUpload = (e) => {
     e.preventDefault();
 
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/api/review`, {
-        firstname,
-        lastname,
-        email,
-        message,
-        star,
-        validation: false,
-        visible: false,
-      })
-      .then((response) => {
-        toast.success("Review submitted");
-        setFirstname("");
-        setLastname("");
-        setEmail("");
-        setMessage("");
-        setStar(0);
-      })
-      .catch((error) => {
-        // Check if error response exists
-        if (error.response && error.response.data.error) {
-          toast.error(error.response.data.error); // Show specific error message
-        } else {
-          toast.error("Failed to submit review"); // Generic error message
-        }
-      });
+    if (userReviewID) {
+      // Si une review existe déjà, on met à jour
+      axios
+        .put(
+          `${process.env.REACT_APP_API_URL}/api/review/update/${userReviewID}`,
+          {
+            firstname,
+            lastname,
+            email,
+            message,
+            star,
+            validation: false,
+            visible: false,
+          }
+        )
+        .then((response) => {
+          toast.success("Review updated successfully");
+          setUserReview(response.data); // Mettre à jour l'état de la review
+        })
+        .catch((error) => {
+          toast.error("Failed to update review");
+        });
+    } else {
+      // Sinon, on crée une nouvelle review
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/api/review`, {
+          firstname,
+          lastname,
+          email,
+          message,
+          star,
+          validation: false,
+          visible: false,
+        })
+        .then((response) => {
+          toast.success("Review submitted successfully");
+          setUserReview(response.data); // Mettre à jour l'état de la review après création
+        })
+        .catch((error) => {
+          // Check if error response exists
+          if (error.response && error.response.data.error) {
+            if (
+              error.response.data.error ===
+              "cet email a déjà été utilisé pour laisser un avis"
+            ) {
+              setFirstname("");
+              setLastname("");
+              setEmail("");
+              setMessage("");
+              setStar(0);
+            }
+            toast.error(
+              "cet email a déjà été utilisé pour laisser un avis, connectez vous ou créez un compte pour modifier votre avis"
+            ); // Show specific error message
+          } else {
+            toast.error("Failed to submit review"); // Generic error message
+          }
+        });
+    }
   };
+
   return (
     <div className="home">
       <div className="container mt-5 mb-5 col-10 col-sm-8 col-md-6 col-lg-5">

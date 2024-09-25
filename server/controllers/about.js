@@ -50,7 +50,6 @@ exports.getAboutActive = async (req, res) => {
         .status(200)
         .json({ message: "No active about found", about: null });
     }
-    console.log(about);
     res.status(200).json(about);
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });

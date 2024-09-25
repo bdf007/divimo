@@ -37,7 +37,14 @@ const Login = () => {
         // store token in local storage
         localStorage.setItem("token", res.token);
         // set user in context
-        setUser({ username: res.user.username, role: res.user.role });
+        setUser({
+          username: res.user.username,
+          role: res.user.role,
+          id: res.user._id,
+          email: res.user.email,
+          firstname: res.user.firstname,
+          lastname: res.user.lastname,
+        });
         // redirect to home page
         navigate("/");
       }

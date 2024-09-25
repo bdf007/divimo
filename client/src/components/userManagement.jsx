@@ -75,9 +75,8 @@ const UserManagement = () => {
     }
   };
 
-  // Remplit les champs d'édition avec les données de l'utilisateur sélectionné
   const handleEditClick = (userlist) => {
-    setEditUser(userlist); // Définit l'utilisateur en cours d'édition
+    setEditUser(userlist);
     setUpdateUsername(userlist.username);
     setUpdateFirstname(userlist.firstname);
     setUpdateLastname(userlist.lastname);
@@ -92,113 +91,111 @@ const UserManagement = () => {
   return (
     <div className="container mt-5">
       <h1>Liste des utilisateurs</h1>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Email</th>
-            <th>Role</th>
-          </tr>
-        </thead>
-        <tbody>
-          {listOfUsers.map((userlist) => (
-            <tr key={userlist._id}>
-              <td>{userlist.username}</td>
-              <td>{userlist.firstname}</td>
-              <td>{userlist.lastname}</td>
-              <td>{userlist.email}</td>
-              <td>{userlist.role}</td>
-              {(user.role === "admin" || user.role === "superadmin") && (
-                <>
-                  <td>
+      <div className="row">
+        {listOfUsers.map((userlist) => (
+          <div className="col-md-6 col-lg-4 mb-4" key={userlist._id}>
+            <div className="card h-100">
+              <div className="card-body">
+                <h5 className="card-title">{userlist.username}</h5>
+                <p className="card-text">
+                  <strong>Firstname: </strong> {userlist.firstname} <br />
+                  <strong>Lastname: </strong> {userlist.lastname} <br />
+                  <strong>Email: </strong> {userlist.email} <br />
+                  <strong>Role: </strong> {userlist.role}
+                </p>
+                {(user.role === "admin" || user.role === "superadmin") && (
+                  <div>
                     {userlist.role === "user" && (
                       <button
-                        className="btn btn-danger"
+                        className="btn btn-danger btn-sm me-2"
                         onClick={() => deleteUser(userlist._id)}
                       >
                         Delete
                       </button>
                     )}
                     <button
-                      className="btn btn-warning"
+                      className="btn btn-warning btn-sm"
                       onClick={() => handleEditClick(userlist)}
                     >
                       Edit
                     </button>
-                  </td>
-                </>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       {editUser && (
-        <div className="edit-form">
+        <div className="edit-form mt-4">
           <h3>Edit User</h3>
           <form
             onSubmit={(e) => {
-              e.preventDefault(); // Empêche le rechargement de la page
-              handleUpdateUser(); // Appelle la fonction de mise à jour
+              e.preventDefault();
+              handleUpdateUser();
             }}
           >
-            <div className="form-group">
-              <label>Username</label>
-              <input
-                type="text"
-                value={updateUsername}
-                onChange={(e) => setUpdateUsername(e.target.value)}
-                className="form-control"
-              />
+            <div className="row">
+              <div className="form-group col-md-6">
+                <label>Username</label>
+                <input
+                  type="text"
+                  value={updateUsername}
+                  onChange={(e) => setUpdateUsername(e.target.value)}
+                  className="form-control"
+                />
+              </div>
+              <div className="form-group col-md-6">
+                <label>First Name</label>
+                <input
+                  type="text"
+                  value={updateFirstname}
+                  onChange={(e) => setUpdateFirstname(e.target.value)}
+                  className="form-control"
+                />
+              </div>
             </div>
-            <div className="form-group">
-              <label>First Name</label>
-              <input
-                type="text"
-                value={updateFirstname}
-                onChange={(e) => setUpdateFirstname(e.target.value)}
-                className="form-control"
-              />
+            <div className="row">
+              <div className="form-group col-md-6">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  value={updateLastname}
+                  onChange={(e) => setUpdateLastname(e.target.value)}
+                  className="form-control"
+                />
+              </div>
+              <div className="form-group col-md-6">
+                <label>Email</label>
+                <input
+                  type="email"
+                  value={updateEmail}
+                  onChange={(e) => setUpdateEmail(e.target.value)}
+                  className="form-control"
+                />
+              </div>
             </div>
-            <div className="form-group">
-              <label>Last Name</label>
-              <input
-                type="text"
-                value={updateLastname}
-                onChange={(e) => setUpdateLastname(e.target.value)}
-                className="form-control"
-              />
-            </div>
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                value={updateEmail}
-                onChange={(e) => setUpdateEmail(e.target.value)}
-                className="form-control"
-              />
-            </div>
-            <div className="form-group">
-              <label>Role</label>
-              <select
-                value={updateRole}
-                onChange={(e) => setUpdateRole(e.target.value)}
-                className="form-control"
-              >
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-                <option value="superadmin">Superadmin</option>
-              </select>
+            <div className="row">
+              <div className="form-group col-md-6">
+                <label>Role</label>
+                <select
+                  value={updateRole}
+                  onChange={(e) => setUpdateRole(e.target.value)}
+                  className="form-control"
+                >
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                  <option value="superadmin">Superadmin</option>
+                </select>
+              </div>
             </div>
 
-            <button type="submit" className="btn btn-success">
+            <button type="submit" className="btn btn-success mt-3">
               Save Changes
             </button>
-            {/* Bouton pour annuler l'édition */}
             <button
-              className="btn btn-secondary"
+              className="btn btn-secondary mt-3 ms-2"
               onClick={() => setEditUser(null)}
             >
               Cancel

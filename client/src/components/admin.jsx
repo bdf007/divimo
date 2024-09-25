@@ -9,6 +9,7 @@ import UserManagement from "./userManagement";
 import AdminReviewManagement from "./adminReviewManagement ";
 import ReviewCarousel from "./reviewCaroussel";
 import AboutUploader from "./aboutUploader";
+import CategoryUploader from "./categoryUploader";
 
 const Admin = () => {
   const { user, setUser } = useContext(UserContext);
@@ -17,6 +18,8 @@ const Admin = () => {
   const [showUserManagement, setShowUserManagement] = useState(false); // État pour afficher/masquer UserManagement
   const [showReviewManagement, setShowReviewManagement] = useState(false); // État pour afficher/masquer ReviewManagement
   const [showAboutUploader, setShowAboutUploader] = useState(false); // État pour afficher/masquer AboutUploader
+  const [showCategoryUploader, setShowCategoryUploader] = useState(false); // État pour afficher/masquer CategoryUploader
+
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -47,6 +50,7 @@ const Admin = () => {
     setShowUserManagement(false); // Masque le UserManagement
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowAboutUploader(false); // Masque le AboutUploader
+    setShowCategoryUploader(false); // Masque le CategoryUploader
   };
 
   // Fonction pour basculer l'état d'affichage du UserManagement
@@ -55,6 +59,7 @@ const Admin = () => {
     setShowUploader(false); // Masque le VitrailUploader
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowAboutUploader(false); // Masque le AboutUploader
+    setShowCategoryUploader(false); // Masque le CategoryUploader
   };
 
   // Fonction pour basculer l'état d'affichage du ReviewManagement
@@ -63,6 +68,7 @@ const Admin = () => {
     setShowUploader(false); // Masque le VitrailUploader
     setShowUserManagement(false); // Masque le UserManagement
     setShowAboutUploader(false); // Masque le AboutUploader
+    setShowCategoryUploader(false); // Masque le CategoryUploader
   };
 
   // Fonction pour basculer l'état d'affichage du AboutUploader
@@ -71,68 +77,113 @@ const Admin = () => {
     setShowUploader(false); // Masque le VitrailUploader
     setShowUserManagement(false); // Masque le UserManagement
     setShowReviewManagement(false); // Masque le ReviewManagement
+    setShowCategoryUploader(false); // Masque le CategoryUploader
   };
 
-  return (
-    <div className="container mt-5 col-10 col-sm-8 col-md-6 col-lg-5">
-      <div className="form-group mb-3">
-        <h4>
-          Welcome, {user.username}
-          <span> </span>
-          Role: {user.role}
-        </h4>
+  // Fonction pour basculer l'état d'affichage du CategoryUploader
+  const toggleCategoryUploader = () => {
+    setShowCategoryUploader((prev) => !prev);
+    setShowUploader(false); // Masque le VitrailUploader
+    setShowUserManagement(false); // Masque le UserManagement
+    setShowReviewManagement(false); // Masque le ReviewManagement
+    setShowAboutUploader(false); // Masque le AboutUploader
+  };
 
-        {/* Bouton pour afficher ou masquer le VitrailUploader */}
+  const rendervitrailUploader = () => {
+    return (
+      <>
         <button className="btn btn-primary" onClick={toggleUploader}>
           {showUploader
             ? "masquer l'ajour de vitrail"
             : "Afficher l'ajout de vitrail"}
         </button>
-        {/* Bouton pour afficher ou masquer le UserManagement */}
-        <button className="btn btn-primary ms-3" onClick={toggleUserManagement}>
-          {showUserManagement
-            ? "masquer la gestion des utilisateurs"
-            : "Afficher la gestion des utilisateurs"}
-        </button>
-        {/* Bouton pour afficher ou masquer le ReviewManagement */}
-        <button
-          className="btn btn-primary ms-3"
-          onClick={toggleReviewManagement}
-        >
-          {showReviewManagement
-            ? "masquer la gestion des avis"
-            : "Afficher la gestion des avis"}
-        </button>
-
-        {/* Conditionnellement afficher le VitrailUploader */}
         {showUploader && (
           <div className="uploader-container">
             <VitrailCaroussel />
             <VitrailUploader />
           </div>
         )}
+      </>
+    );
+  };
 
-        {/* Conditionnellement afficher le UserManagement */}
+  const renderUserManagement = () => {
+    return (
+      <>
+        <button className="btn btn-primary" onClick={toggleUserManagement}>
+          {showUserManagement
+            ? "masquer la gestion des utilisateurs"
+            : "Afficher la gestion des utilisateurs"}
+        </button>
         {showUserManagement && <UserManagement />}
-        {/* Conditionnellement afficher le ReviewManagement */}
+      </>
+    );
+  };
+
+  const renderReviewManagement = () => {
+    return (
+      <>
+        <button className="btn btn-primary" onClick={toggleReviewManagement}>
+          {showReviewManagement
+            ? "masquer la gestion des avis"
+            : "Afficher la gestion des avis"}
+        </button>
         {showReviewManagement && (
           <div className="uploader-container">
             <ReviewCarousel />
             <AdminReviewManagement />
           </div>
         )}
-        {/* Conditionnellement afficher le AboutUploader */}
-        {showAboutUploader && <AboutUploader />}
-        {/* Bouton pour afficher ou masquer le AboutUploader */}
-        <button className="btn btn-primary ms-3" onClick={toggleAboutUploader}>
+      </>
+    );
+  };
+
+  const renderAboutUploader = () => {
+    return (
+      <>
+        <button className="btn btn-primary" onClick={toggleAboutUploader}>
           {showAboutUploader
             ? "masquer l'ajout de la section À propos"
             : "Afficher l'ajout de la section À propos"}
         </button>
+        {showAboutUploader && <AboutUploader />}
+      </>
+    );
+  };
+
+  const renderCategoryUploader = () => {
+    return (
+      <>
+        <button className="btn btn-primary" onClick={toggleCategoryUploader}>
+          {showCategoryUploader
+            ? "masquer l'ajout de catégorie"
+            : "Afficher l'ajout de catégorie"}
+        </button>
+        {showCategoryUploader && <CategoryUploader />}
+      </>
+    );
+  };
+
+  return (
+    <div className="container mt-5 col-10 col-sm-8 col-md-6 col-lg-5 ">
+      <div className="form-group mb-3 ">
+        <h4>
+          Welcome, {user.username}
+          <span> </span>
+          Role: {user.role}
+        </h4>
+        {rendervitrailUploader()}
+        {renderUserManagement()}
+        {renderReviewManagement()}
+        {renderAboutUploader()}
+        {renderCategoryUploader()}
       </div>
-      <button className="btn btn-danger mt-3" onClick={handleLogout}>
-        Logout
-      </button>
+      <br />
+      <div className="d-flex justify-content-center">
+        <button className="btn btn-danger mt-3" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 };
