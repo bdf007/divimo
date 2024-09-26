@@ -37,6 +37,10 @@ const vitrailSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    visible: {
+      type: Boolean,
+      default: false,
+    },
     shipping: {
       type: Boolean,
       default: false,

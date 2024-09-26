@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,6 +19,7 @@ import Login from "./pages/Login";
 import About from "./pages/About";
 import Profil from "./pages/Profil";
 import Review from "./pages/Review";
+import Category from "./components/category";
 
 // components
 import NavBar from "./components/navBar";
@@ -27,6 +29,19 @@ import { getUser } from "./api/user";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [listOfCategories, setListOfCategories] = useState([]);
+
+  const getCategories = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/categories`)
+      .then((response) => {
+        setListOfCategories(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+        setListOfCategories([]);
+      });
+  };
 
   useEffect(() => {
     const unsubscribe = getUser()
@@ -47,6 +62,10 @@ function App() {
     return () => unsubscribe;
   }, []);
 
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <div>
       <Router>
@@ -54,6 +73,13 @@ function App() {
           <ToastContainer />
           <NavBar />
           <Routes>
+            {listOfCategories.map((category) => (
+              <Route
+                key={category._id}
+                path={`/category/${category.name}`}
+                element={<Category category={category.name} />}
+              />
+            ))}
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/about" element={<About />} />

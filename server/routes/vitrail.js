@@ -22,7 +22,7 @@ router.get("/vitrails", getAllVitrails);
 router.get("/vitrail/carousel", getVitrailCarousel);
 router.put("/vitrail/update/:id", verifyToken, updateVitrail);
 router.get("/vitrail/title/:title", getVitrailByTitle);
-router.get("/vitrail/category/:category", getVitrailByCategory);
+router.get("/vitrail/category", getVitrailByCategory);
 router.delete("/vitrail/delete/:id", deleteVitrail);
 router.get("/vitrail/:id", getVitrailById);
 

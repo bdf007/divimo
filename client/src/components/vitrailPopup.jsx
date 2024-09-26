@@ -11,6 +11,7 @@ const VitrailPopup = ({ vitrail, onClose, user, onUpdate }) => {
   const [updatePrice, setUpdatePrice] = useState(vitrail.price);
   const [updateCategory, setUpdateCategory] = useState(vitrail.category);
   const [updateCarousel, setUpdateCarousel] = useState(vitrail.carousel);
+  const [updateVisible, setUpdateVisible] = useState(vitrail.visible);
   const [updateQuantity, setUpdateQuantity] = useState(vitrail.quantity);
   const [listOfCategories, setListOfCategories] = useState([]);
   //   const [updateSold, setUpdateSold] = useState(vitrail.sold);
@@ -25,6 +26,7 @@ const VitrailPopup = ({ vitrail, onClose, user, onUpdate }) => {
           price: updatePrice,
           category: updateCategory,
           carousel: updateCarousel,
+          visible: updateVisible,
           quantity: updateQuantity,
         },
         {
@@ -104,7 +106,7 @@ const VitrailPopup = ({ vitrail, onClose, user, onUpdate }) => {
                 <option value="">Sélectionner une catégorie</option>{" "}
                 {/* Option par défaut */}
                 {listOfCategories.map((category) => (
-                  <option key={category._id} value={category._id}>
+                  <option key={category._id} value={category.name}>
                     {category.name}
                   </option>
                 ))}
@@ -115,6 +117,13 @@ const VitrailPopup = ({ vitrail, onClose, user, onUpdate }) => {
                 checked={updateCarousel}
                 onChange={(e) => setUpdateCarousel(e.target.checked)}
               />
+              <label>Visible</label>
+              <input
+                type="checkbox"
+                checked={updateVisible}
+                onChange={(e) => setUpdateVisible(e.target.checked)}
+              />
+
               <label>Quantity</label>
               <input
                 type="number"

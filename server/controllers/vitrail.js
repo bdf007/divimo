@@ -1,4 +1,5 @@
 const Vitrail = require("../models/vitrail");
+const Category = require("../models/category");
 
 exports.createVitrail = async (req, res) => {
   try {
@@ -16,6 +17,12 @@ exports.getAllVitrails = async (req, res) => {
     if (!vitrails) {
       return res.status(404).json({ error: "Vitrails not found" });
     }
+    // // get the name of the category and replace the category id
+    // for (let i = 0; i < vitrails.length; i++) {
+    //   const vitrail = vitrails[i];
+    //   const category = await Category.findById(vitrail.category);
+    //   vitrail.category = category.name;
+    // }
     res.status(200).json(vitrails);
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
@@ -48,12 +55,15 @@ exports.getVitrailByTitle = async (req, res) => {
 
 exports.getVitrailByCategory = async (req, res) => {
   try {
-    const vitrails = await Vitrail.find({ category: req.params.category });
-    if (!vitrails) {
+    const category = req.query.category;
+    const visible = req.query.visible;
+    const vitrails = await Vitrail.find({ category, visible: true });
+    if (!vitrails || vitrails.length === 0) {
       return res.status(404).json({ error: "Vitrails not found" });
     }
     res.status(200).json(vitrails);
   } catch (err) {
+    console.error("Error fetching vitrails by category:", err); // Log de l'erreur
     res.status(500).json({ error: "Internal server error" });
   }
 };

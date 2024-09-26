@@ -11,6 +11,7 @@ const VitrailUploader = () => {
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
   const [carousel, setCarousel] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [quantity, setQuantity] = useState(0);
   // const [shipping, setShipping] = useState(false);
   // const [sold, setSold] = useState(0);
@@ -112,12 +113,14 @@ const VitrailUploader = () => {
       // convert the canvas content to base64 with WebP format
       const resizedBase64Data = canvas.toDataURL("image/webp");
 
+      console.log("category", category);
       const vitrailData = {
         title,
         description,
         price,
         category,
         carousel,
+        visible,
         quantity,
         photo: resizedBase64Data,
         // shipping,
@@ -162,6 +165,10 @@ const VitrailUploader = () => {
     setCarousel(e.target.value);
   };
 
+  const handleVisibleChange = (e) => {
+    setVisible(e.target.value);
+  };
+
   const handleQuantityChange = (e) => {
     setQuantity(e.target.value);
   };
@@ -180,6 +187,7 @@ const VitrailUploader = () => {
     setPrice(0);
     setCategory("");
     setCarousel(false);
+    setVisible(false);
     setQuantity(0);
     // setShipping(false);
     // setSold(0);
@@ -308,13 +316,13 @@ const VitrailUploader = () => {
               id="category"
               className="form-select"
               aria-label="Default select example"
-              value={category} // Le state "category" garde la valeur sélectionnée
+              value={category}
               onChange={handleCategoryChange}
             >
               <option value="">Sélectionner une catégorie</option>{" "}
               {/* Option par défaut */}
               {listOfCategories.map((category) => (
-                <option key={category._id} value={category._id}>
+                <option key={category._id} value={category.name}>
                   {category.name}
                 </option>
               ))}
@@ -330,6 +338,18 @@ const VitrailUploader = () => {
                 className="form-control-checkbox"
                 placeholder="Carousel"
                 onChange={handleCarouselChange}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label htmlFor="visible">Visible</label>
+              <input
+                type="checkbox"
+                id="visible"
+                className="form-control-checkbox"
+                placeholder="Visible"
+                onChange={handleVisibleChange}
               />
             </div>
           </div>

@@ -14,7 +14,6 @@ const Review = () => {
   const [star, setStar] = useState(0);
   const [userReviewID, setUserReviewID] = useState("");
   const [userReview, setUserReview] = useState([]);
-  const [userReviewExists, setUserReviewExists] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   useEffect(() => {
@@ -30,7 +29,6 @@ const Review = () => {
             setMessage(userReview.message);
             setStar(userReview.star);
             setUserReview(userReview);
-            // setUserReviewExists(true);
             setUserReviewID(userReview._id);
           }
         });
@@ -118,7 +116,6 @@ const Review = () => {
       .delete(`${process.env.REACT_APP_API_URL}/api/review/${userReviewID}`)
       .then(() => {
         toast.success("Review deleted successfully");
-        // setUserReview({}); // Mettre à jour l'état de la review
         resetMessage();
       })
       .catch((error) => {
@@ -211,7 +208,6 @@ const Review = () => {
           >
             {userReview._id ? "Update" : "Submit"}
           </button>
-          {/* if update add a button to delete */}
           {userReview._id && (
             <button className="btn btn-danger" onClick={handleDelete}>
               Delete

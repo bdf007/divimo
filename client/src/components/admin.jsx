@@ -172,11 +172,11 @@ const Admin = () => {
           <span> </span>
           Role: {user.role}
         </h4>
-        {rendervitrailUploader()}
         {renderUserManagement()}
-        {renderReviewManagement()}
-        {renderAboutUploader()}
         {renderCategoryUploader()}
+        {rendervitrailUploader()}
+        {renderAboutUploader()}
+        {renderReviewManagement()}
       </div>
       <br />
       <div className="d-flex justify-content-center">
