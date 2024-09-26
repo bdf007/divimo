@@ -105,9 +105,14 @@
   margin: 0 2rem;
 }
 
-.btn-primary {
+.btn-primary,
+.btn-danger,
+.btn-warning,
+.btn-success,
+.btn-secondary {
   margin-right: 1rem;
   margin-bottom: 1rem;
+  margin-top: 0.5rem;
 }
 
 @keyframes App-logo-spin {

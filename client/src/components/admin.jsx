@@ -166,7 +166,7 @@ const Admin = () => {
 
   return (
     <div className="container mt-5 col-10 col-sm-8 col-md-6 col-lg-5 ">
-      <div className="form-group mb-3 ">
+      <div className="text-center mb-5 ">
         <h4>
           Welcome, {user.username}
           <span> </span>
@@ -180,7 +180,7 @@ const Admin = () => {
       </div>
       <br />
       <div className="d-flex justify-content-center">
-        <button className="btn btn-danger mt-3" onClick={handleLogout}>
+        <button className="btn btn-outline-danger mt-3" onClick={handleLogout}>
           Logout
         </button>
       </div>

@@ -58,6 +58,19 @@ exports.getVitrailByCategory = async (req, res) => {
   }
 };
 
+exports.getVitrailCarousel = async (req, res) => {
+  try {
+    const vitrails = await Vitrail.find({ carousel: true });
+    if (!vitrails) {
+      return res.status(404).json({ error: "Vitrails not found" });
+    }
+    res.status(200).json(vitrails);
+  } catch (err) {
+    console.error("Error fetching vitrails for carousel: ", err); // Log l'erreur côté serveur
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 exports.updateVitrail = async (req, res) => {
   try {
     const id = req.params.id;

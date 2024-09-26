@@ -10,11 +10,13 @@ const VitrailUploader = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
+  const [carousel, setCarousel] = useState(false);
   const [quantity, setQuantity] = useState(0);
   // const [shipping, setShipping] = useState(false);
   // const [sold, setSold] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
   const [listOfVitrails, setListOfVitrails] = useState([]);
+  const [listOfCategories, setListOfCategories] = useState([]);
   const [selectedVitrail, setSelectedVitrail] = useState(null);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
 
@@ -45,6 +47,17 @@ const VitrailUploader = () => {
   const closeVitrailPopup = () => {
     setSelectedVitrail(null);
     setIsOpenPopup(false);
+  };
+
+  const getListOfCategories = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/categories`
+      );
+      setListOfCategories(res.data);
+    } catch (error) {
+      toast.error("Error during fetching categories: ", error);
+    }
   };
 
   const handleUploadVitrail = async (e) => {
@@ -104,6 +117,7 @@ const VitrailUploader = () => {
         description,
         price,
         category,
+        carousel,
         quantity,
         photo: resizedBase64Data,
         // shipping,
@@ -144,6 +158,10 @@ const VitrailUploader = () => {
     setCategory(e.target.value);
   };
 
+  const handleCarouselChange = (e) => {
+    setCarousel(e.target.value);
+  };
+
   const handleQuantityChange = (e) => {
     setQuantity(e.target.value);
   };
@@ -161,6 +179,7 @@ const VitrailUploader = () => {
     setDescription("");
     setPrice(0);
     setCategory("");
+    setCarousel(false);
     setQuantity(0);
     // setShipping(false);
     // setSold(0);
@@ -194,6 +213,7 @@ const VitrailUploader = () => {
 
   useEffect(() => {
     getListOfVitrails();
+    getListOfCategories();
   }, []);
 
   return (
@@ -228,7 +248,12 @@ const VitrailUploader = () => {
                 />
               )}
 
-              <button onClick={() => deleteVitrail(vitrail._id)}>Delete</button>
+              <button
+                className="btn btn-danger"
+                onClick={() => deleteVitrail(vitrail._id)}
+              >
+                Delete
+              </button>
             </div>
           ))}
         </div>
@@ -279,13 +304,34 @@ const VitrailUploader = () => {
           </div>
           <div className="form-group">
             <label htmlFor="category">Catégorie</label>
-            <input
-              type="text"
+            <select
               id="category"
-              className="form-control"
-              placeholder="Catégorie"
+              className="form-select"
+              aria-label="Default select example"
+              value={category} // Le state "category" garde la valeur sélectionnée
               onChange={handleCategoryChange}
-            />
+            >
+              <option value="">Sélectionner une catégorie</option>{" "}
+              {/* Option par défaut */}
+              {listOfCategories.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label htmlFor="carousel">Carousel</label>
+              <input
+                type="checkbox"
+                id="carousel"
+                className="form-control-checkbox"
+                placeholder="Carousel"
+                onChange={handleCarouselChange}
+              />
+            </div>
           </div>
           <div className="form-group">
             <label htmlFor="quantity">Quantité</label>
@@ -320,7 +366,11 @@ const VitrailUploader = () => {
           </div> */}
           <br />
 
-          <button type="submit" onClick={handleUploadVitrail}>
+          <button
+            className="btn btn-success"
+            type="submit"
+            onClick={handleUploadVitrail}
+          >
             Envoyer
           </button>
         </form>

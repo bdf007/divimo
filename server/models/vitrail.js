@@ -33,6 +33,10 @@ const vitrailSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    carousel: {
+      type: Boolean,
+      default: false,
+    },
     shipping: {
       type: Boolean,
       default: false,

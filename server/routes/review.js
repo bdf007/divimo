@@ -22,6 +22,9 @@ const {
 // get review page
 router.get("/review", getReview);
 
+// post review page
+router.post("/review", postReview);
+
 // get review page with visible and validated reviews
 router.get("/review/visible", getReviewVisibleAndValidated);
 
@@ -31,12 +34,6 @@ router.get("/review/random", getReviewRandom);
 // get review by email of the user
 router.get("/review/email/:email", getReviewByEmail);
 
-// post review page
-router.post("/review", postReview);
-
-// get specific review by id
-router.get("/review/:id", getReviewById);
-
 // update specific review by id
 router.put("/review/update/:id", updateReviewById);
 
@@ -45,6 +42,9 @@ router.put("/review/validation/:id", validateReviewById);
 
 // modify visibility of specific review by id
 router.put("/review/visibility/:id", modifyVisbilityById);
+
+// get specific review by id
+router.get("/review/:id", getReviewById);
 
 // delete specific review by id
 router.delete("/review/:id", deleteReviewById);

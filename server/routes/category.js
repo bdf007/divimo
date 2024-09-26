@@ -16,8 +16,8 @@ const { verifyToken } = require("../middlewares/auth");
 // api routes
 router.post("/category/create", createCategory);
 router.get("/categories", getAllCategories);
-router.get("/category/:id", getCategoryById);
 router.put("/category/update/:id", updateCategory);
 router.delete("/category/delete/:id", deleteCategory);
+router.get("/category/:id", getCategoryById);
 
 module.exports = router;

@@ -28,18 +28,18 @@ const VitrailCaroussel = () => {
     setSelectedVitrail(null);
     setShowPopup(false);
   };
+  const getListOfVitrails = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/vitrail/carousel`
+      );
+      setListOfVitrails(res.data);
+    } catch (error) {
+      toast.error(`Error during fetching vitrails: ${error.message}`);
+    }
+  };
 
   useEffect(() => {
-    const getListOfVitrails = async () => {
-      try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/vitrails`
-        );
-        setListOfVitrails(res.data);
-      } catch (error) {
-        toast.error("Error during fetching vitrails: ", error);
-      }
-    };
     getListOfVitrails();
   }, []);
 
@@ -48,9 +48,6 @@ const VitrailCaroussel = () => {
     return (
       <div className="vitrail-caroussel">
         <img src={vitrail.photo} alt={vitrail.title} />
-        {/* <div className="vitrail-info">
-          <Typography variant="h4">{vitrail.title}</Typography>
-        </div> */}
       </div>
     );
   }
@@ -68,9 +65,6 @@ const VitrailCaroussel = () => {
   return listOfVitrails.length === 1 ? (
     <div className="vitrail-caroussel">
       <img src={listOfVitrails[0].photo} alt={listOfVitrails[0].title} />
-      {/* <div className="vitrail-info">
-        <Typography variant="h4">{listOfVitrails[0].title}</Typography>
-      </div> */}
     </div>
   ) : (
     <div className="vitrail-caroussel">
@@ -82,9 +76,6 @@ const VitrailCaroussel = () => {
               alt={vitrail.title}
               onClick={() => openVitrailPopup(vitrail)}
             />
-            {/* <div className="vitrail-info">
-              <Typography variant="h4">{vitrail.title}</Typography>
-            </div> */}
           </div>
         ))}
       </Slider>

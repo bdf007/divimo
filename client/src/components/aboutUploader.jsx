@@ -191,7 +191,7 @@ const AboutUploader = ({ onUpdate }) => {
             <label htmlFor="activeAbout">Active About</label>
             <input
               type="checkbox"
-              className="form-control"
+              className="form-control-checkbox"
               id="activeAbout"
               checked={activeAbout}
               onChange={(e) => setActiveAbout(e.target.checked)}

@@ -17,9 +17,9 @@ const { verifyToken } = require("../middlewares/auth");
 // api routes
 router.post("/about/create", createAbout);
 router.get("/abouts", getAllAbouts);
-router.get("/about/:id", getAboutById);
 router.get("/activeAbout", getAboutActive);
 router.put("/about/update/:id", updateAbout);
 router.delete("/about/delete/:id", deleteAbout);
+router.get("/about/:id", getAboutById);
 
 module.exports = router;

@@ -105,6 +105,27 @@ const Review = () => {
     }
   };
 
+  const resetMessage = () => {
+    // setFirstname("");
+    // setLastname("");
+    // setEmail("");
+    setMessage("");
+    setStar(0);
+  };
+
+  const handleDelete = () => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/api/review/${userReviewID}`)
+      .then(() => {
+        toast.success("Review deleted successfully");
+        // setUserReview({}); // Mettre à jour l'état de la review
+        resetMessage();
+      })
+      .catch((error) => {
+        toast.error("Failed to delete review");
+      });
+  };
+
   return (
     <div className="home">
       <div className="container mt-5 mb-5 col-10 col-sm-8 col-md-6 col-lg-5">
@@ -190,6 +211,12 @@ const Review = () => {
           >
             {userReview._id ? "Update" : "Submit"}
           </button>
+          {/* if update add a button to delete */}
+          {userReview._id && (
+            <button className="btn btn-danger" onClick={handleDelete}>
+              Delete
+            </button>
+          )}
         </form>
         <p>Votre avis sera publié après vérification par un administrateur</p>
       </div>

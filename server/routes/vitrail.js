@@ -8,6 +8,7 @@ const {
   getVitrailById,
   getVitrailByTitle,
   getVitrailByCategory,
+  getVitrailCarousel,
   updateVitrail,
   deleteVitrail,
 } = require("../controllers/vitrail");
@@ -18,10 +19,11 @@ const { verifyToken } = require("../middlewares/auth");
 // api routes
 router.post("/vitrail/create", createVitrail);
 router.get("/vitrails", getAllVitrails);
-router.get("/vitrail/:id", getVitrailById);
+router.get("/vitrail/carousel", getVitrailCarousel);
+router.put("/vitrail/update/:id", verifyToken, updateVitrail);
 router.get("/vitrail/title/:title", getVitrailByTitle);
 router.get("/vitrail/category/:category", getVitrailByCategory);
-router.put("/vitrail/update/:id", verifyToken, updateVitrail);
 router.delete("/vitrail/delete/:id", deleteVitrail);
+router.get("/vitrail/:id", getVitrailById);
 
 module.exports = router;
