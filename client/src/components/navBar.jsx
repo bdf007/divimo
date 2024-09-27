@@ -39,31 +39,38 @@ const NavBar = () => {
       });
   };
 
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const renderCategories = () => {
+    return (
+      <li className="nav-item dropdown">
+        <button
+          className="nav-link dropdown-toggle btn btn-link"
+          id="navbarDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Catégories
+        </button>
+        <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+          {listOfCategories.map((category) => (
+            <li key={category._id}>
+              <Link className="dropdown-item" to={`/category/${category.name}`}>
+                {category.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </li>
+    );
+  };
+
   const renderNoUser = () => {
     return (
       <>
-        <li className="nav-item dropdown">
-          <button
-            className="nav-link dropdown-toggle btn btn-link"
-            id="navbarDropdown"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Catégories
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-            {listOfCategories.map((category) => (
-              <li key={category._id}>
-                <Link
-                  className="dropdown-item"
-                  to={`/category/${category.name}`}
-                >
-                  {category.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </li>
+        {renderCategories()}
         <li className="nav-item">
           <Link className="nav-link" to="/About">
             A propos
@@ -91,29 +98,7 @@ const NavBar = () => {
   const renderUser = () => {
     return (
       <>
-        <li className="nav-item dropdown">
-          <button
-            className="nav-link dropdown-toggle btn btn-link"
-            id="navbarDropdown"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Catégories
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-            {listOfCategories.map((category) => (
-              <li key={category._id}>
-                <Link
-                  className="dropdown-item"
-                  to={`/category/${category.name}`}
-                >
-                  {category.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </li>
-
+        {renderCategories()}
         <li className="nav-item">
           <Link className="nav-link" to="/Profil">
             Profil
@@ -141,10 +126,6 @@ const NavBar = () => {
       </>
     );
   };
-
-  useEffect(() => {
-    getCategories();
-  }, []);
 
   useEffect(() => {
     if (logoutMessage) {

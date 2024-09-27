@@ -148,7 +148,7 @@ const VitrailPopup = ({ vitrail, onClose, user, onUpdate }) => {
               </button>
             </form>
           ) : (
-            <div>
+            <>
               <h2>titre: {vitrail.title}</h2>
               {!vitrail.description ? (
                 <p>pas de description disponible</p>
@@ -186,7 +186,7 @@ const VitrailPopup = ({ vitrail, onClose, user, onUpdate }) => {
               <button className="btn btn-warning" onClick={onClose}>
                 Close
               </button>
-            </div>
+            </>
           )}
         </div>
       </div>

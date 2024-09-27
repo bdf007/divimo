@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+.appGlobal {
+  background-image: url(assets/background.png);
+  background-size: auto; /* L'image se répétera selon sa taille d'origine */
+  background-position: top left; /* Commence le fond en haut à gauche */
+  background-repeat: repeat; /* Répète l'image en X et en Y */
+  width: 100vw;
+  min-height: 100vh; /* Assure que l'arrière-plan couvre au moins toute la hauteur de la fenêtre */
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -38,23 +47,31 @@
 }
 
 .uploader-container > .vitrail-caroussel {
-  width: 50vw; /* Prendre 100% de l'espace du conteneur */
+  width: 50vw;
   margin-bottom: 20px; /* Ajouter un espace entre les éléments */
 }
 
 .uploader-container > .review-carousel {
-  width: 40vw; /* Prendre 100% de l'espace du conteneur */
+  width: 40vw;
   margin-bottom: 20px; /* Ajouter un espace entre les éléments */
 }
 
 .vitrail-caroussel {
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  background-color: #a497f7;
   margin: 0;
   padding: 0 10rem;
   color: white;
+  background-color: #f163cb;
+}
+
+.vitrail-info {
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0 10rem;
+  color: white;
+  text-align: center;
 }
 
 .vitrail-caroussel img {
@@ -63,7 +80,6 @@
   margin: 0 auto;
   display: block;
 }
-
 .review-carousel {
   width: 100vw;
   background-color: #f163cb;
@@ -93,6 +109,17 @@
   width: 80vw;
   max-height: 80vh;
   overflow-y: auto;
+  display: flex; /* Utilise flexbox pour centrer le contenu */
+  flex-direction: column; /* Aligne les éléments en colonne */
+  align-items: center; /* Centre les éléments horizontalement */
+  text-align: center;
+}
+
+.popup-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
 }
 
 .form-check {
@@ -125,19 +152,24 @@
 }
 
 @media screen and (max-width: 768px) {
-  .description {
-    font-size: 1.5rem;
-    white-space: pre-line;
+  /* Agrandir les images du carousel sur mobile */
+  .vitrail-caroussel img {
+    max-width: 100%; /* Réduit le max-width pour être plus grand sur mobile */
+    height: auto;
   }
-  .carousel {
-    padding: 0 2rem;
-  }
+
   .uploader-container > .vitrail-caroussel {
     width: 100vw; /* Prendre 100% de l'espace du conteneur */
     margin-bottom: 20px; /* Ajouter un espace entre les éléments */
   }
+
   .uploader-container > .review-carousel {
     width: 100vw; /* Prendre 100% de l'espace du conteneur */
     margin-bottom: 20px; /* Ajouter un espace entre les éléments */
+  }
+
+  /* Styles pour centrer le texte dans le popup */
+  .popup-content {
+    text-align: center; /* Centrer le texte */
   }
 }

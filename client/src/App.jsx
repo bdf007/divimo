@@ -67,7 +67,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="appGlobal">
       <Router>
         <UserContext.Provider value={{ user, setUser }}>
           <ToastContainer />

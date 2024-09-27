@@ -22,7 +22,7 @@ const vitrailSchema = new mongoose.Schema(
       type: String,
       trim: true,
       maxlength: 32,
-      default: "Non classé",
+      default: "autre image",
     },
     quantity: {
       type: Number,

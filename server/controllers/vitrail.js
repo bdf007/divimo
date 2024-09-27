@@ -55,13 +55,31 @@ exports.getVitrailByTitle = async (req, res) => {
 
 exports.getVitrailByCategory = async (req, res) => {
   try {
-    const category = req.query.category;
+    const categoryName = req.query.category;
     const visible = req.query.visible;
-    const vitrails = await Vitrail.find({ category, visible: true });
+
+    // Récupérer la catégorie pour obtenir la description
+    const category = await Category.findOne({ name: categoryName });
+    if (!category) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    // Rechercher les vitraux correspondants à la catégorie et à la visibilité
+    const vitrails = await Vitrail.find({
+      category: categoryName,
+      visible: true,
+    });
     if (!vitrails || vitrails.length === 0) {
       return res.status(404).json({ error: "Vitrails not found" });
     }
-    res.status(200).json(vitrails);
+
+    // Ajouter la description de la catégorie à chaque vitrail
+    const vitrailsWithCategoryDescription = vitrails.map((vitrail) => ({
+      ...vitrail.toObject(), // Convertir en objet JavaScript
+      categoryDescription: category.description, // Ajouter la description de la catégorie
+    }));
+
+    res.status(200).json(vitrailsWithCategoryDescription);
   } catch (err) {
     console.error("Error fetching vitrails by category:", err); // Log de l'erreur
     res.status(500).json({ error: "Internal server error" });
