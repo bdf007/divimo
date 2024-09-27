@@ -9,13 +9,13 @@ const CategoryUploader = () => {
   const [nameCategory, setNameCategory] = useState("");
   const [descriptionCategory, setDescriptionCategory] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState(null);
+  const [visibleUpload, setVisibleUpload] = useState(false);
 
   const getCategories = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/api/categories`)
       .then((response) => {
         setListOfCategories(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error fetching categories:", error);
@@ -27,12 +27,14 @@ const CategoryUploader = () => {
     setNameCategory(category.name);
     setDescriptionCategory(category.description);
     setEditingCategoryId(category._id);
+    setVisibleUpload(true);
   };
 
   const clearForm = () => {
     setNameCategory("");
     setDescriptionCategory("");
     setEditingCategoryId(null);
+    setVisibleUpload(false);
   };
 
   const createCategory = () => {
@@ -82,7 +84,6 @@ const CategoryUploader = () => {
         clearForm();
       })
       .catch((error) => {
-        console.log(error.message.data);
         console.error("Error updating category:", error);
         toast.error("Error updating category");
       });
@@ -116,38 +117,50 @@ const CategoryUploader = () => {
   return (
     <div>
       <h1>Category Uploader</h1>
-      <div className="form-group">
-        <label>Category</label>
-        <input
-          type="text"
-          placeholder="Name"
-          className="form-control"
-          value={nameCategory}
-          onChange={(event) => setNameCategory(event.target.value)}
-        />
-        <label>Description</label>
-        <textarea
-          placeholder="Description"
-          className="form-control"
-          value={descriptionCategory}
-          onChange={(event) => setDescriptionCategory(event.target.value)}
-        ></textarea>
+      {!editingCategoryId && (
         <button
-          className={`${
-            editingCategoryId ? "btn btn-primary" : "btn btn-success"
-          }`}
-          onClick={editingCategoryId ? updateCategory : createCategory}
+          className="btn btn-primary"
+          onClick={() => setVisibleUpload(!visibleUpload)}
         >
-          {editingCategoryId ? "Update" : "Create"}
+          {visibleUpload ? "Masquer" : "Afficher"} l'uploader
         </button>
-        {editingCategoryId && (
-          <button className="btn btn-danger" onClick={clearForm}>
-            Cancel
+      )}
+      {visibleUpload && (
+        <div className="form-group">
+          <label>Category</label>
+          <input
+            type="text"
+            placeholder="Name"
+            className="form-control"
+            value={nameCategory}
+            onChange={(event) => setNameCategory(event.target.value)}
+          />
+          <label>Description</label>
+          <textarea
+            placeholder="Description"
+            className="form-control"
+            value={descriptionCategory}
+            onChange={(event) => setDescriptionCategory(event.target.value)}
+          ></textarea>
+          <button
+            className={`${
+              editingCategoryId ? "btn btn-primary" : "btn btn-success"
+            }`}
+            onClick={editingCategoryId ? updateCategory : createCategory}
+          >
+            {editingCategoryId ? "Update" : "Create"}
           </button>
-        )}
+          {editingCategoryId && (
+            <button className="btn btn-danger" onClick={clearForm}>
+              Cancel
+            </button>
+          )}
+        </div>
+      )}
 
-        <div>
-          {listOfCategories.map((category) => (
+      <div>
+        {!editingCategoryId &&
+          listOfCategories.map((category) => (
             <div key={category._id}>
               <h3>Nom de la catégorie: {category.name}</h3>
               <p>Description de la catégorie: {category.description}</p>
@@ -165,7 +178,6 @@ const CategoryUploader = () => {
               </button>
             </div>
           ))}
-        </div>
       </div>
     </div>
   );

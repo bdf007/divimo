@@ -1,14 +1,30 @@
+html,
+body {
+  height: 100%;
+  overflow-x: hidden; /* Désactive le défilement horizontal */
+  width: 100%; /* S'assure que la largeur est à 100% */
+  margin: 0; /* Supprime les marges par défaut */
+  padding: 0;
+}
+
 .App {
   text-align: center;
+  overflow: hidden; /* Empêche le contenu de déborder */
 }
 
 .appGlobal {
   background-image: url(assets/background.png);
-  background-size: auto; /* L'image se répétera selon sa taille d'origine */
+  background-size: cover; /* Couvre tout l'élément */
   background-position: top left; /* Commence le fond en haut à gauche */
   background-repeat: repeat; /* Répète l'image en X et en Y */
   width: 100vw;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh; /* Assure que l'arrière-plan couvre au moins toute la hauteur de la fenêtre */
+}
+
+main {
+  flex: 1; /* Permet au main de prendre l'espace restant */
 }
 
 .App-logo {
@@ -40,6 +56,14 @@
   color: #61dafb;
 }
 
+.footer-bs {
+  /* position: absolute; */
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  height: 5rem;
+}
+
 .uploader-container {
   display: flex;
   flex-direction: column; /* Aligner les éléments verticalement */
@@ -61,8 +85,8 @@
   align-items: center;
   margin: 0;
   padding: 0 10rem;
-  color: white;
-  background-color: #f163cb;
+  /* color: white; */
+  /* background-color: #f163cb; */
 }
 
 .vitrail-info {
@@ -70,7 +94,7 @@
   align-items: center;
   margin: 0;
   padding: 0 10rem;
-  color: white;
+  /* color: white; */
   text-align: center;
 }
 
@@ -82,10 +106,10 @@
 }
 .review-carousel {
   width: 100vw;
-  background-color: #f163cb;
+  background-color: #97daee79;
   margin: 0;
   padding: 0 5rem;
-  color: white;
+  /* color: white; */
 }
 
 .popup-overlay {
@@ -102,7 +126,7 @@
 }
 
 .popup-content {
-  background-color: #45a29e;
+  background-color: #5a57fa;
   padding: 20px;
   border-radius: 5px;
   max-width: 800px;
@@ -113,6 +137,11 @@
   flex-direction: column; /* Aligne les éléments en colonne */
   align-items: center; /* Centre les éléments horizontalement */
   text-align: center;
+
+  background-image: url(assets/background.png);
+  background-size: cover; /* Couvre tout l'élément */
+  background-position: top left; /* Commence le fond en haut à gauche */
+  background-repeat: repeat;
 }
 
 .popup-content img {
@@ -159,7 +188,7 @@
   }
 
   .uploader-container > .vitrail-caroussel {
-    width: 100vw; /* Prendre 100% de l'espace du conteneur */
+    /*width: 100vw;  Prendre 100% de l'espace du conteneur */
     margin-bottom: 20px; /* Ajouter un espace entre les éléments */
   }
 
@@ -171,5 +200,13 @@
   /* Styles pour centrer le texte dans le popup */
   .popup-content {
     text-align: center; /* Centrer le texte */
+    margin: 0;
+    padding: 0;
+    width: 100vw; /* Prendre 100% de la largeur de l'écran */
+  }
+
+  .vitrail-info {
+    padding: 0 1rem;
+    align-items: flex-start;
   }
 }

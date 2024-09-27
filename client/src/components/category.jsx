@@ -45,20 +45,24 @@ const Category = ({ category }) => {
 
   useEffect(() => {
     getVitrailsByCategory();
-  }, [category]);
+  });
 
   return (
     <div className="home">
       <div className="container mt-5 col-10 col-sm-8 col-md-6 col-lg-5 ">
         <div className="text-center mb-5">
-          <h1>{category}</h1>
           <p>
-            Contenu de la catégorie:{" "}
             {!listOfVitrailsByCategory.length ||
             !listOfVitrailsByCategory[0].categoryDescription ? (
-              <span>Non disponible</span>
+              <span>
+                pas de contenue dans cette catégorie actuellement contacter
+                l'artiste pour toute demande
+              </span>
             ) : (
-              <span>{listOfVitrailsByCategory[0].categoryDescription}</span>
+              <>
+                <h1>{category}</h1>
+                <span>{listOfVitrailsByCategory[0].categoryDescription}</span>
+              </>
             )}
           </p>
           <div
@@ -82,7 +86,11 @@ const Category = ({ category }) => {
                   <img
                     src={vitrail.photo}
                     alt={vitrail.title}
-                    style={{ width: "100%", height: "auto", cursor: "pointer" }} // Ajoute un curseur pour indiquer que l'image est cliquable
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      cursor: "pointer",
+                    }} // Ajoute un curseur pour indiquer que l'image est cliquable
                     onClick={() => openVitrailPopup(vitrail)} // Ouvre le popup lors du clic sur l'image
                   />
                 )}

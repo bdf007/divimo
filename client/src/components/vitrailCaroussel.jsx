@@ -60,7 +60,7 @@ const VitrailCaroussel = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
-    adaptiveHeight: true,
+    // adaptiveHeight: true,
     responsive: [
       {
         breakpoint: 768, // Taille d'écran pour le mobile
@@ -68,6 +68,9 @@ const VitrailCaroussel = () => {
           slidesToShow: 1, // Nombre de diapositives à afficher
           slidesToScroll: 1, // Nombre de diapositives à faire défiler
           dots: false, // Affiche les points sur mobile
+          arrows: false, // Affiche les flèches sur mobile
+          // the image take the full heigth of the caroussel
+          // adaptiveHeight: true,
         },
       },
     ],

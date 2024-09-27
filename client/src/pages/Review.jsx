@@ -215,6 +215,10 @@ const Review = () => {
           )}
         </form>
         <p>Votre avis sera publié après vérification par un administrateur</p>
+        <p>
+          En cas de modification votre avis devra de nouveau être validé par un
+          administrateur
+        </p>
       </div>
     </div>
   );

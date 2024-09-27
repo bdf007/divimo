@@ -13,6 +13,7 @@ const VitrailUploader = () => {
   const [carousel, setCarousel] = useState(false);
   const [visible, setVisible] = useState(false);
   const [quantity, setQuantity] = useState(0);
+  const [dimension, setDimension] = useState("");
   // const [shipping, setShipping] = useState(false);
   // const [sold, setSold] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -20,6 +21,7 @@ const VitrailUploader = () => {
   const [listOfCategories, setListOfCategories] = useState([]);
   const [selectedVitrail, setSelectedVitrail] = useState(null);
   const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [formIsVisible, setFormIsVisible] = useState(false);
   const fileInputRef = useRef(null); // Création de la référence
 
   const getListOfVitrails = async () => {
@@ -70,6 +72,7 @@ const VitrailUploader = () => {
     setCarousel(false);
     setVisible(false);
     setQuantity(0);
+    setDimension("");
     // setShipping(false);
     // setSold(0);
     setSelectedFile(null);
@@ -138,6 +141,7 @@ const VitrailUploader = () => {
         carousel,
         visible,
         quantity,
+        dimension,
         photo: resizedBase64Data,
         // shipping,
         // sold,
@@ -151,6 +155,7 @@ const VitrailUploader = () => {
       toast.success("Vitrail created successfully", res.data.message);
       resetForm();
       getListOfVitrails();
+      setFormIsVisible(false);
     } catch (error) {
       toast.error("Error during vitrail creation: ", error);
     }
@@ -189,6 +194,10 @@ const VitrailUploader = () => {
     setQuantity(e.target.value);
   };
 
+  const handleDimensionChange = (e) => {
+    setDimension(e.target.value);
+  };
+
   // const handleShippingChange = (e) => {
   //   setShipping(e.target.value);
   // };
@@ -196,19 +205,6 @@ const VitrailUploader = () => {
   // const handleSoldChange = (e) => {
   //   setSold(e.target.value);
   // };
-
-  const updateVitrail = () => {
-    // try {
-    //   const res = await axios.put(
-    //     `${process.env.REACT_APP_API_URL}/api/vitrail/update/${id}`
-    //   );
-    //   toast.success(res.data.message);
-    //   getListOfVitrails();
-    // } catch (error) {
-    //   toast.error("Error during vitrail update: ", error);
-    // }
-    getListOfVitrails();
-  };
 
   const deleteVitrail = async (id) => {
     try {
@@ -328,8 +324,19 @@ const VitrailUploader = () => {
             onChange={handleQuantityChange}
           />
         </div>
+        <div className="form-group">
+          <label htmlFor="dimension">Dimension</label>
+          <input
+            type="text"
+            id="dimension"
+            className="form-control"
+            placeholder="Dimension"
+            value={dimension}
+            onChange={handleDimensionChange}
+          />
+        </div>
         {/* <div className="form-group">
-            <label htmlFor="shipping">Livraison</label>
+                <label htmlFor="shipping">Livraison</label>
             <input
               type="checkbox"
               id="shipping"
@@ -337,20 +344,20 @@ const VitrailUploader = () => {
               placeholder="Livraison"
               value={shipping}
               onChange={handleShippingChange}
-            />
+              />
           </div> */}
 
         {/* <div className="form-group">
             <label htmlFor="sold">Vendu</label>
             <input
-              type="number"
+            type="number"
               id="sold"
               className="form-control"
               placeholder="Vendu"
               value={sold}
               onChange={handleSoldChange}
             />
-          </div> */}
+            </div> */}
         <br />
 
         <button
@@ -363,7 +370,6 @@ const VitrailUploader = () => {
       </form>
     );
   };
-
   useEffect(() => {
     getListOfVitrails();
     getListOfCategories();
@@ -371,7 +377,13 @@ const VitrailUploader = () => {
 
   return (
     <div>
-      {user && renderUploadForm()}
+      <button
+        className="btn btn-primary"
+        onClick={() => setFormIsVisible(!formIsVisible)}
+      >
+        {formIsVisible ? "Masquer l'uploader" : "afficher l'uploader"}
+      </button>
+      {user && formIsVisible && renderUploadForm()}
       <h2>list of vitrails</h2>
       {!listOfVitrails || listOfVitrails.length === 0 ? (
         <h1>Loading...</h1>
@@ -417,7 +429,7 @@ const VitrailUploader = () => {
           vitrail={selectedVitrail}
           onClose={closeVitrailPopup}
           user={user}
-          onUpdate={updateVitrail}
+          onUpdate={getListOfVitrails}
         />
       )}
     </div>

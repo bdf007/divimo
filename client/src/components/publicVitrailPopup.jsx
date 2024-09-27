@@ -30,6 +30,11 @@ const PublicVitrailPopup = ({ vitrail, onClose }) => {
           ) : (
             <p>contacter l'artiste pour la disponibilité</p>
           )}
+          {vitrail.dimension === "Pas de dimension renseignée" ? (
+            <p>contacter l'artiste pour connaitre les dimensions</p>
+          ) : (
+            <p>dimension: {vitrail.dimension}</p>
+          )}
         </div>
       </div>
     </div>

@@ -41,6 +41,10 @@ const vitrailSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    dimension: {
+      type: String,
+      default: "Pas de dimension renseignée",
+    },
     shipping: {
       type: Boolean,
       default: false,

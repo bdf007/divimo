@@ -23,6 +23,7 @@ import Category from "./components/category";
 
 // components
 import NavBar from "./components/navBar";
+import Footer from "./components/footer";
 
 // API functions
 import { getUser } from "./api/user";
@@ -72,21 +73,24 @@ function App() {
         <UserContext.Provider value={{ user, setUser }}>
           <ToastContainer />
           <NavBar />
-          <Routes>
-            {listOfCategories.map((category) => (
-              <Route
-                key={category._id}
-                path={`/category/${category.name}`}
-                element={<Category category={category.name} />}
-              />
-            ))}
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/profil" element={<Profil />} />
-            <Route path="/review" element={<Review />} />
-            <Route path="/" element={<Home />} />
-          </Routes>
+          <main>
+            <Routes>
+              {listOfCategories.map((category) => (
+                <Route
+                  key={category._id}
+                  path={`/category/${category.name}`}
+                  element={<Category category={category.name} />}
+                />
+              ))}
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/profil" element={<Profil />} />
+              <Route path="/review" element={<Review />} />
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </main>
+          <Footer />
           <ToastContainer />
         </UserContext.Provider>
       </Router>

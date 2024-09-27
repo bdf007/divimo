@@ -86,45 +86,48 @@ const UserManagement = () => {
 
   useEffect(() => {
     getListOfUsers();
-  }, []);
+  });
 
   return (
     <div className="container mt-5">
       <h1>Liste des utilisateurs</h1>
       <div className="row">
-        {listOfUsers.map((userlist) => (
-          <div className="col-md-6 col-lg-4 mb-4" key={userlist._id}>
-            <div className="card h-100">
-              <div className="card-body">
-                <h5 className="card-title">{userlist.username}</h5>
-                <p className="card-text">
-                  <strong>Firstname: </strong> {userlist.firstname} <br />
-                  <strong>Lastname: </strong> {userlist.lastname} <br />
-                  <strong>Email: </strong> {userlist.email} <br />
-                  <strong>Role: </strong> {userlist.role}
-                </p>
-                {(user.role === "admin" || user.role === "superadmin") && (
-                  <div>
-                    {userlist.role === "user" && (
-                      <button
-                        className="btn btn-danger btn-sm me-2"
-                        onClick={() => deleteUser(userlist._id)}
-                      >
-                        Delete
-                      </button>
-                    )}
-                    <button
-                      className="btn btn-warning btn-sm"
-                      onClick={() => handleEditClick(userlist)}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                )}
+        {!editUser &&
+          listOfUsers.map((userlist) => (
+            <div className="col-md-6 col-lg-4 mb-4" key={userlist._id}>
+              <div className="card h-100">
+                <div className="card-body">
+                  <h5 className="card-title">{userlist.username}</h5>
+                  <p className="card-text">
+                    <strong>Firstname: </strong> {userlist.firstname} <br />
+                    <strong>Lastname: </strong> {userlist.lastname} <br />
+                    <strong>Email: </strong> {userlist.email} <br />
+                    <strong>Role: </strong> {userlist.role}
+                  </p>
+                  {(user.role === "admin" || user.role === "superadmin") && (
+                    <div>
+                      {userlist.role === "user" && (
+                        <button
+                          className="btn btn-danger btn-sm me-2"
+                          onClick={() => deleteUser(userlist._id)}
+                        >
+                          Delete
+                        </button>
+                      )}
+                      {userlist.role !== "superadmin" && (
+                        <button
+                          className="btn btn-warning btn-sm"
+                          onClick={() => handleEditClick(userlist)}
+                        >
+                          Edit
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
 
       {editUser && (

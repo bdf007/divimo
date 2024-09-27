@@ -109,11 +109,13 @@ const NavBar = () => {
             A propos
           </Link>
         </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/Review">
-            Avis
-          </Link>
-        </li>
+        {user.role !== "admin" && user.role !== "superadmin" && (
+          <li className="nav-item">
+            <Link className="nav-link" to="/Review">
+              Avis
+            </Link>
+          </li>
+        )}
         <li className="nav-item">
           <span
             className="nav-link"
@@ -137,7 +139,10 @@ const NavBar = () => {
     <nav className="navbar navbar-expand-lg navbar-dark bg-black">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          Acceuil
+          {/* admin si user.role === admin ou superadmin sinon acceuil*/}
+          {user && (user.role === "admin" || user.role === "superadmin")
+            ? "Admin"
+            : "Acceuil"}
         </Link>
         <button
           className="navbar-toggler"
