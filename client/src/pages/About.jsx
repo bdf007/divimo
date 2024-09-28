@@ -66,7 +66,9 @@ const About = () => {
   );
 
   return !user || user.role === "user" ? (
-    <div className="container">{renderUserContent()}</div>
+    <div className="container mt-5 col-10 col-sm-8 col-md-6 col-lg-5">
+      {renderUserContent()}
+    </div>
   ) : (
     renderAdminContent()
   );

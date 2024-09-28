@@ -72,7 +72,7 @@ const ReviewCarousel = () => {
           <div key={review._id} className="carousel-item">
             <Typography variant="h6">{review.firstname}</Typography>
             <Typography variant="h5">
-              <blockquote style={{ fontStyle: "italic" }}>
+              <blockquote style={{ fontStyle: "italic", color: "red" }}>
                 "{review.message}"
               </blockquote>
             </Typography>

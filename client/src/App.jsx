@@ -19,7 +19,8 @@ import Login from "./pages/Login";
 import About from "./pages/About";
 import Profil from "./pages/Profil";
 import Review from "./pages/Review";
-import Category from "./components/category";
+import Category from "./pages/Category";
+import Contact from "./pages/Contact";
 
 // components
 import NavBar from "./components/navBar";
@@ -87,6 +88,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/profil" element={<Profil />} />
               <Route path="/review" element={<Review />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/" element={<Home />} />
             </Routes>
           </main>

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import AllReview from "../components/allReview";
 
 const Review = () => {
   const [firstname, setFirstname] = useState("");
@@ -15,6 +16,8 @@ const Review = () => {
   const [userReviewID, setUserReviewID] = useState("");
   const [userReview, setUserReview] = useState([]);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const [uploadVisible, setUploadVisible] = useState(false);
+  const [reviewVisible, setReviewVisible] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -79,6 +82,8 @@ const Review = () => {
         .then((response) => {
           toast.success("Review submitted successfully");
           setUserReview(response.data); // Mettre à jour l'état de la review après création
+          setUploadVisible(false);
+          setReviewVisible(true);
         })
         .catch((error) => {
           // Check if error response exists
@@ -117,14 +122,15 @@ const Review = () => {
       .then(() => {
         toast.success("Review deleted successfully");
         resetMessage();
+        setReviewVisible(true);
       })
       .catch((error) => {
         toast.error("Failed to delete review");
       });
   };
 
-  return (
-    <div className="home">
+  const renderReviewUploader = () => {
+    return (
       <div className="container mt-5 mb-5 col-10 col-sm-8 col-md-6 col-lg-5">
         <h1 className="text-danger">
           {userReview._id ? "Modifier votre review" : "Laisser une review"}
@@ -194,6 +200,7 @@ const Review = () => {
             </div>
           </div>
           <br />
+
           <button
             type="submit"
             className="btn btn-primary"
@@ -206,11 +213,11 @@ const Review = () => {
               !star
             }
           >
-            {userReview._id ? "Update" : "Submit"}
+            {userReview._id ? "Modifier" : "Envoyer"}
           </button>
           {userReview._id && (
             <button className="btn btn-danger" onClick={handleDelete}>
-              Delete
+              Supprimer
             </button>
           )}
         </form>
@@ -220,6 +227,44 @@ const Review = () => {
           administrateur
         </p>
       </div>
+    );
+  };
+
+  const toggleReviewUploader = () => {
+    setUploadVisible(!uploadVisible);
+    setReviewVisible(false);
+  };
+
+  const toggleReviewVisible = () => {
+    setReviewVisible(!reviewVisible);
+    setUploadVisible(false);
+  };
+
+  return (
+    <div className="home">
+      <div className="container mt-5 mb-5 col-10 col-sm-8 col-md-6 col-lg-5">
+        {!uploadVisible && (
+          <button className="btn btn-primary" onClick={toggleReviewUploader}>
+            {userReview._id ? "Modifiez votre avis" : "Postez votre avis"}
+          </button>
+        )}
+        {!reviewVisible && (
+          <button className="btn btn-primary" onClick={toggleReviewVisible}>
+            Voir les avis
+          </button>
+        )}
+      </div>
+      {userReview._id && !uploadVisible && (
+        <div className="container mt-5 mb-5 col-10 col-sm-8 col-md-6 col-lg-5">
+          <p>
+            Vous avez déjà laissé un avis , vous pouvez le modifier ou le
+            supprimer
+          </p>
+        </div>
+      )}
+      {uploadVisible && renderReviewUploader()}
+
+      {reviewVisible && <AllReview />}
     </div>
   );
 };

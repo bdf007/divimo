@@ -7,7 +7,11 @@ const Footer = () => {
         <div className="row">
           <div className="col-12">
             <p className="text-center">
-              &copy; 2024 - DIVIMO - Tous droits réservés
+              &copy; 2024 - <strong>DIVIMO</strong> - Tous droits réservés
+            </p>
+            <p className="text-center">
+              <strong>D</strong>udin <strong>I</strong>ngrid -{" "}
+              <strong>VI</strong>trail et <strong>MO</strong>saïque
             </p>
           </div>
         </div>

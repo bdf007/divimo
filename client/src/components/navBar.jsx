@@ -82,6 +82,11 @@ const NavBar = () => {
           </Link>
         </li>
         <li className="nav-item">
+          <Link className="nav-link" to="/Contact">
+            Contact
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link className="nav-link" to="/Signup">
             Créer un compte
           </Link>
@@ -136,13 +141,16 @@ const NavBar = () => {
     }
   }, [logoutMessage]); // Exécute cet effet lorsque logoutMessage change
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-black">
+    <nav
+      className="navbar navbar-expand-lg  navbar-light"
+      style={{ backgroundColor: "#e3f2fd" }}
+    >
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          {/* admin si user.role === admin ou superadmin sinon acceuil*/}
+          {/* admin si user.role === admin ou superadmin sinon accueil*/}
           {user && (user.role === "admin" || user.role === "superadmin")
             ? "Admin"
-            : "Acceuil"}
+            : "Accueil"}
         </Link>
         <button
           className="navbar-toggler"
