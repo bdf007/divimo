@@ -21,6 +21,8 @@ const aboutRoutes = require("./routes/about");
 const reviewRoutes = require("./routes/review");
 // get the category routes
 const categoryRoutes = require("./routes/category");
+// get the contact routes
+const contactRoutes = require("./routes/contact");
 
 // middleware
 app.use(json({ limit: "10mb" }));
@@ -59,6 +61,9 @@ app.use("/api", reviewRoutes);
 
 // category routes
 app.use("/api", categoryRoutes);
+
+// contact routes
+app.use("/api", contactRoutes);
 
 // serve the react app
 app.get("*", (req, res) => {

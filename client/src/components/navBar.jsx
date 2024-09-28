@@ -115,11 +115,18 @@ const NavBar = () => {
           </Link>
         </li>
         {user.role !== "admin" && user.role !== "superadmin" && (
-          <li className="nav-item">
-            <Link className="nav-link" to="/Review">
-              Avis
-            </Link>
-          </li>
+          <>
+            <li className="nav-item">
+              <Link className="nav-link" to="/Contact">
+                Contact
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/Review">
+                Avis
+              </Link>
+            </li>
+          </>
         )}
         <li className="nav-item">
           <span

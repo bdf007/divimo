@@ -397,7 +397,7 @@ const VitrailUploader = () => {
         >
           {listOfVitrails.map((vitrail) => (
             <div
-              key={vitrail.id}
+              key={vitrail._id}
               style={{
                 border: "1px solid #ccc",
                 padding: "8px",

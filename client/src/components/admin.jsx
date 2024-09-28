@@ -10,6 +10,7 @@ import AdminReviewManagement from "./adminReviewManagement ";
 import ReviewCarousel from "./reviewCaroussel";
 import AboutUploader from "./aboutUploader";
 import CategoryUploader from "./categoryUploader";
+import ContactManagement from "./contactManagement";
 
 const Admin = () => {
   const { user, setUser } = useContext(UserContext);
@@ -19,6 +20,7 @@ const Admin = () => {
   const [showReviewManagement, setShowReviewManagement] = useState(false); // État pour afficher/masquer ReviewManagement
   const [showAboutUploader, setShowAboutUploader] = useState(false); // État pour afficher/masquer AboutUploader
   const [showCategoryUploader, setShowCategoryUploader] = useState(false); // État pour afficher/masquer CategoryUploader
+  const [showContactManagement, setShowContactManagement] = useState(false); // État pour afficher/masquer ContactManagement
 
   const navigate = useNavigate();
 
@@ -51,6 +53,7 @@ const Admin = () => {
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
+    setShowContactManagement(false); // Masque le ContactManagement
   };
 
   // Fonction pour basculer l'état d'affichage du UserManagement
@@ -60,6 +63,7 @@ const Admin = () => {
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
+    setShowContactManagement(false); // Masque le ContactManagement
   };
 
   // Fonction pour basculer l'état d'affichage du ReviewManagement
@@ -69,6 +73,7 @@ const Admin = () => {
     setShowUserManagement(false); // Masque le UserManagement
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
+    setShowContactManagement(false); // Masque le Contact
   };
 
   // Fonction pour basculer l'état d'affichage du AboutUploader
@@ -78,6 +83,7 @@ const Admin = () => {
     setShowUserManagement(false); // Masque le UserManagement
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowCategoryUploader(false); // Masque le CategoryUploader
+    setShowContactManagement(false); // Masque le ContactManagement
   };
 
   // Fonction pour basculer l'état d'affichage du CategoryUploader
@@ -87,6 +93,17 @@ const Admin = () => {
     setShowUserManagement(false); // Masque le UserManagement
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowAboutUploader(false); // Masque le AboutUploader
+    setShowContactManagement(false); // Masque le ContactManagement
+  };
+
+  // Fonction pour basculer l'état d'affichage du ContactManagement
+  const toggleContactManagement = () => {
+    setShowContactManagement((prev) => !prev);
+    setShowUploader(false); // Masque le VitrailUploader
+    setShowUserManagement(false); // Masque le UserManagement
+    setShowReviewManagement(false); // Masque le ReviewManagement
+    setShowAboutUploader(false); // Masque le AboutUploader
+    setShowCategoryUploader(false); // Masque le CategoryUploader
   };
 
   const rendervitrailUploader = () => {
@@ -164,6 +181,19 @@ const Admin = () => {
     );
   };
 
+  const renderContactManagement = () => {
+    return (
+      <>
+        <button className="btn btn-primary" onClick={toggleContactManagement}>
+          {showContactManagement
+            ? "masquer la gestion des messages"
+            : "Afficher la gestion des messages"}
+        </button>
+        {showContactManagement && <ContactManagement />}
+      </>
+    );
+  };
+
   return (
     <div className="container mt-5 col-10 col-sm-8 col-md-6 col-lg-5 ">
       <div className="text-center mb-5 ">
@@ -177,6 +207,7 @@ const Admin = () => {
         {rendervitrailUploader()}
         {renderAboutUploader()}
         {renderReviewManagement()}
+        {renderContactManagement()}
       </div>
       <br />
       <div className="d-flex justify-content-center">
