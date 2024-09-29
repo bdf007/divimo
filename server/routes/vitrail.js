@@ -9,6 +9,7 @@ const {
   getVitrailByTitle,
   getVitrailByCategory,
   getVitrailCarousel,
+  getVitrailCarouselRandom,
   updateVitrail,
   deleteVitrail,
 } = require("../controllers/vitrail");
@@ -20,6 +21,7 @@ const { verifyToken } = require("../middlewares/auth");
 router.post("/vitrail/create", createVitrail);
 router.get("/vitrails", getAllVitrails);
 router.get("/vitrail/carousel", getVitrailCarousel);
+router.get("/vitrail/carouselRandom", getVitrailCarouselRandom);
 router.put("/vitrail/update/:id", verifyToken, updateVitrail);
 router.get("/vitrail/title/:title", getVitrailByTitle);
 router.get("/vitrail/category", getVitrailByCategory);

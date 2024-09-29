@@ -14,10 +14,10 @@ const Home = () => {
         <VitrailCaroussel />
         {user ? ( // Vérification que l'utilisateur est bien défini avant de rendre son nom
           <h1 style={{ marginTop: "20px" }}>
-            Bienvenue {user.firstname} {user.lastname} sur Divimo
+            Bienvenue {user.firstname} {user.lastname} sur Di Vimo
           </h1>
         ) : (
-          <h1 style={{ marginTop: "20px" }}>Bienvenue sur DIVIMO</h1> // Affichage par défaut si l'utilisateur n'est pas connecté
+          <h1 style={{ marginTop: "20px" }}>Bienvenue sur DI VIMO</h1> // Affichage par défaut si l'utilisateur n'est pas connecté
         )}
         <p>
           Le site de <strong>VI</strong>trail et de <strong>MO</strong>saïque

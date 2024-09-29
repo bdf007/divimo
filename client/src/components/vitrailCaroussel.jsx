@@ -31,7 +31,7 @@ const VitrailCaroussel = () => {
   const getListOfVitrails = async () => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/vitrail/carousel`
+        `${process.env.REACT_APP_API_URL}/api/vitrail/carouselRandom`
       );
       setListOfVitrails(res.data);
     } catch (error) {

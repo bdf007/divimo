@@ -99,6 +99,23 @@ exports.getVitrailCarousel = async (req, res) => {
   }
 };
 
+exports.getVitrailCarouselRandom = async (req, res) => {
+  // récuperer 5 vitraux aléatoires pour le carousel ayant la propiete carousel : true
+  try {
+    const vitrails = await Vitrail.aggregate([
+      { $match: { carousel: true } },
+      { $sample: { size: 5 } },
+    ]);
+    if (!vitrails) {
+      return res.status(404).json({ error: "Vitrails not found" });
+    }
+    res.status(200).json(vitrails);
+  } catch (err) {
+    console.error("Error fetching vitrails for carousel: ", err); // Log l'erreur côté serveur
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 exports.updateVitrail = async (req, res) => {
   try {
     const id = req.params.id;

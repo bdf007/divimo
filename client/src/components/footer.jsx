@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="row">
           <div className="col-12">
             <p className="text-center">
-              &copy; 2024 - <strong>DIVIMO</strong> - Tous droits réservés
+              &copy; 2024 - <strong>DI VIMO</strong> - Tous droits réservés
             </p>
             <p className="text-center">
               <strong>D</strong>udin <strong>I</strong>ngrid -{" "}
