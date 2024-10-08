@@ -99,8 +99,8 @@ const UserManagement = () => {
                 <div className="card-body">
                   <h5 className="card-title">{userlist.username}</h5>
                   <p className="card-text">
-                    <strong>Firstname: </strong> {userlist.firstname} <br />
-                    <strong>Lastname: </strong> {userlist.lastname} <br />
+                    <strong>Prénom: </strong> {userlist.firstname} <br />
+                    <strong>Nom: </strong> {userlist.lastname} <br />
                     <strong>Email: </strong> {userlist.email} <br />
                     <strong>Role: </strong> {userlist.role}
                   </p>
@@ -111,7 +111,7 @@ const UserManagement = () => {
                           className="btn btn-danger btn-sm me-2"
                           onClick={() => deleteUser(userlist._id)}
                         >
-                          Delete
+                          Supprimer
                         </button>
                       )}
                       {userlist.role !== "superadmin" && (
@@ -119,7 +119,7 @@ const UserManagement = () => {
                           className="btn btn-warning btn-sm"
                           onClick={() => handleEditClick(userlist)}
                         >
-                          Edit
+                          Modifier
                         </button>
                       )}
                     </div>
@@ -132,7 +132,7 @@ const UserManagement = () => {
 
       {editUser && (
         <div className="edit-form mt-4">
-          <h3>Edit User</h3>
+          <h3>Modifier l'utilisateur</h3>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -141,7 +141,7 @@ const UserManagement = () => {
           >
             <div className="row">
               <div className="form-group col-md-6">
-                <label>Username</label>
+                <label>Nom d'utilisateur</label>
                 <input
                   type="text"
                   value={updateUsername}
@@ -150,7 +150,7 @@ const UserManagement = () => {
                 />
               </div>
               <div className="form-group col-md-6">
-                <label>First Name</label>
+                <label>Prénom</label>
                 <input
                   type="text"
                   value={updateFirstname}
@@ -161,7 +161,7 @@ const UserManagement = () => {
             </div>
             <div className="row">
               <div className="form-group col-md-6">
-                <label>Last Name</label>
+                <label>Nom</label>
                 <input
                   type="text"
                   value={updateLastname}
@@ -195,13 +195,13 @@ const UserManagement = () => {
             </div>
 
             <button type="submit" className="btn btn-success mt-3">
-              Save Changes
+              Modifier
             </button>
             <button
               className="btn btn-secondary mt-3 ms-2"
               onClick={() => setEditUser(null)}
             >
-              Cancel
+              Annuler
             </button>
           </form>
         </div>

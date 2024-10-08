@@ -161,11 +161,11 @@ const CategoryUploader = () => {
             }`}
             onClick={editingCategoryId ? updateCategory : createCategory}
           >
-            {editingCategoryId ? "Update" : "Create"}
+            {editingCategoryId ? "Mettre à jour" : "Créer"}
           </button>
           {editingCategoryId && (
             <button className="btn btn-danger" onClick={clearForm}>
-              Cancel
+              Annuler
             </button>
           )}
         </div>
@@ -173,6 +173,7 @@ const CategoryUploader = () => {
 
       <div>
         {!editingCategoryId &&
+          !visibleUpload &&
           listOfCategories.map((category) => (
             <div key={category._id}>
               <h3>Nom de la catégorie: {category.name}</h3>
@@ -182,13 +183,13 @@ const CategoryUploader = () => {
                 className="btn btn-primary"
                 onClick={() => loadCategoryForEditing(category)}
               >
-                Edit
+                Modifier
               </button>
               <button
                 className="btn btn-danger"
                 onClick={() => deleteCategory(category._id)}
               >
-                Delete
+                Supprimer
               </button>
             </div>
           ))}
