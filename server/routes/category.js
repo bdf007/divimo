@@ -5,6 +5,7 @@ const router = express.Router();
 const {
   createCategory,
   getAllCategories,
+  getCategoriesVisible,
   getCategoryById,
   updateCategory,
   deleteCategory,
@@ -16,6 +17,7 @@ const { verifyToken } = require("../middlewares/auth");
 // api routes
 router.post("/category/create", createCategory);
 router.get("/categories", getAllCategories);
+router.get("/categories/visible", getCategoriesVisible);
 router.put("/category/update/:id", updateCategory);
 router.delete("/category/delete/:id", deleteCategory);
 router.get("/category/:id", getCategoryById);

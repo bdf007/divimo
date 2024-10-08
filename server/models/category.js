@@ -14,6 +14,10 @@ const categorySchema = new mongoose.Schema(
       maxlength: 2000,
       default: "Pas de description",
     },
+    visible: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

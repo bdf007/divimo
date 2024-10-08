@@ -3,6 +3,7 @@ import { UserContext } from "../context/UserContext";
 import VitrailCaroussel from "../components/vitrailCaroussel";
 import Admin from "../components/admin";
 import ReviewCarousel from "../components/reviewCaroussel";
+import About from "../pages/About.jsx";
 
 const Home = () => {
   const { user } = useContext(UserContext);
@@ -24,7 +25,7 @@ const Home = () => {
         </p>
       </div>
       <div className="text-center mb-5">
-        <p>coucou</p>
+        <About />
       </div>
       <div className="text-center mb-5">
         <ReviewCarousel />

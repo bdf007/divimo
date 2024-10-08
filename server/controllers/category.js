@@ -22,6 +22,17 @@ exports.getAllCategories = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+exports.getCategoriesVisible = async (req, res) => {
+  try {
+    const categories = await Category.find({ visible: true });
+    if (!categories) {
+      return res.status(404).json({ error: "Categories not found" });
+    }
+    res.status(200).json(categories);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 exports.getCategoryById = async (req, res) => {
   try {

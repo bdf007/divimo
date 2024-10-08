@@ -29,7 +29,7 @@ const NavBar = () => {
 
   const getCategories = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/categories`)
+      .get(`${process.env.REACT_APP_API_URL}/api/categories/visible`)
       .then((response) => {
         setListOfCategories(response.data);
       })
@@ -44,6 +44,8 @@ const NavBar = () => {
   }, []);
 
   const renderCategories = () => {
+    if (listOfCategories.length === 0) return null; // Ne pas afficher si aucune catégorie visible
+
     return (
       <li className="nav-item dropdown">
         <button
@@ -54,7 +56,7 @@ const NavBar = () => {
         >
           Catégories
         </button>
-        <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+        <ul className="nav-item dropdown-menu" aria-labelledby="navbarDropdown">
           {listOfCategories.map((category) => (
             <li key={category._id}>
               <Link className="dropdown-item" to={`/category/${category.name}`}>
@@ -71,11 +73,11 @@ const NavBar = () => {
     return (
       <>
         {renderCategories()}
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link" to="/About">
             A propos
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link className="nav-link" to="/Review">
             Avis
@@ -109,11 +111,11 @@ const NavBar = () => {
             Profil
           </Link>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link" to="/About">
             A propos
           </Link>
-        </li>
+        </li> */}
         {user.role !== "admin" && user.role !== "superadmin" && (
           <>
             <li className="nav-item">

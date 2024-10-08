@@ -8,6 +8,7 @@ const CategoryUploader = () => {
   const [listOfCategories, setListOfCategories] = useState([]);
   const [nameCategory, setNameCategory] = useState("");
   const [descriptionCategory, setDescriptionCategory] = useState("");
+  const [visibleCategory, setVisibleCategory] = useState(false);
   const [editingCategoryId, setEditingCategoryId] = useState(null);
   const [visibleUpload, setVisibleUpload] = useState(false);
 
@@ -27,12 +28,14 @@ const CategoryUploader = () => {
     setNameCategory(category.name);
     setDescriptionCategory(category.description);
     setEditingCategoryId(category._id);
+    setVisibleCategory(category.visible);
     setVisibleUpload(true);
   };
 
   const clearForm = () => {
     setNameCategory("");
     setDescriptionCategory("");
+    setVisibleCategory(false);
     setEditingCategoryId(null);
     setVisibleUpload(false);
   };
@@ -44,6 +47,7 @@ const CategoryUploader = () => {
         {
           name: nameCategory,
           description: descriptionCategory,
+          visible: visibleCategory,
         },
         {
           headers: {
@@ -70,6 +74,7 @@ const CategoryUploader = () => {
         {
           name: nameCategory,
           description: descriptionCategory,
+          visible: visibleCategory,
         }
         // {
         //   headers: {
@@ -142,6 +147,14 @@ const CategoryUploader = () => {
             value={descriptionCategory}
             onChange={(event) => setDescriptionCategory(event.target.value)}
           ></textarea>
+          <label>Visible</label>
+          <input
+            type="checkbox"
+            checked={visibleCategory}
+            onChange={(event) => setVisibleCategory(event.target.checked)}
+          />
+          <br />
+
           <button
             className={`${
               editingCategoryId ? "btn btn-primary" : "btn btn-success"
@@ -164,6 +177,7 @@ const CategoryUploader = () => {
             <div key={category._id}>
               <h3>Nom de la catégorie: {category.name}</h3>
               <p>Description de la catégorie: {category.description}</p>
+              <p>Visible: {category.visible ? "Oui" : "Non"}</p>
               <button
                 className="btn btn-primary"
                 onClick={() => loadCategoryForEditing(category)}
