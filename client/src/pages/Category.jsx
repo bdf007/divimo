@@ -86,6 +86,7 @@ const Category = ({ category }) => {
                   <img
                     src={vitrail.photo}
                     alt={vitrail.title}
+                    aria-label={`Voir détails de ${vitrail.title}`}
                     style={{
                       width: "100%",
                       height: "auto",
