@@ -11,6 +11,7 @@ import ReviewCarousel from "./reviewCaroussel";
 import AboutUploader from "./aboutUploader";
 import CategoryUploader from "./categoryUploader";
 import ContactManagement from "./contactManagement";
+import SocialMediaUploader from "./socialMediaUploader";
 
 const Admin = () => {
   const { user, setUser } = useContext(UserContext);
@@ -21,6 +22,7 @@ const Admin = () => {
   const [showAboutUploader, setShowAboutUploader] = useState(false); // État pour afficher/masquer AboutUploader
   const [showCategoryUploader, setShowCategoryUploader] = useState(false); // État pour afficher/masquer CategoryUploader
   const [showContactManagement, setShowContactManagement] = useState(false); // État pour afficher/masquer ContactManagement
+  const [showSocialMediaUploader, setShowSocialMediaUploader] = useState(false); // État pour afficher/masquer SocialMediaUploader
 
   const navigate = useNavigate();
 
@@ -54,6 +56,7 @@ const Admin = () => {
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le ContactManagement
+    setShowAboutUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du UserManagement
@@ -64,6 +67,7 @@ const Admin = () => {
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le ContactManagement
+    setShowAboutUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du ReviewManagement
@@ -74,6 +78,7 @@ const Admin = () => {
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le Contact
+    setShowAboutUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du AboutUploader
@@ -84,6 +89,7 @@ const Admin = () => {
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le ContactManagement
+    setShowAboutUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du CategoryUploader
@@ -94,6 +100,7 @@ const Admin = () => {
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowContactManagement(false); // Masque le ContactManagement
+    setShowAboutUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du ContactManagement
@@ -104,6 +111,18 @@ const Admin = () => {
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
+    setShowAboutUploader(false); // Masque le AboutUploader
+  };
+
+  // Fonction pour basculer l'état d'affichage du SocialMediaUploader
+  const toggleSocialMediaUploader = () => {
+    setShowSocialMediaUploader((prev) => !prev);
+    setShowUploader(false); // Masque le VitrailUploader
+    setShowUserManagement(false); // Masque le UserManagement
+    setShowReviewManagement(false); // Masque le ReviewManagement
+    setShowAboutUploader(false); // Masque le AboutUploader
+    setShowCategoryUploader(false); // Masque le CategoryUploader
+    setShowContactManagement(false); // Masque le ContactManagement
   };
 
   const rendervitrailUploader = () => {
@@ -194,6 +213,19 @@ const Admin = () => {
     );
   };
 
+  const renderSocialMediaUploader = () => {
+    return (
+      <>
+        <button className="btn btn-primary" onClick={toggleSocialMediaUploader}>
+          {showSocialMediaUploader
+            ? "masquer l'ajout de médias sociaux"
+            : "Afficher l'ajout de médias sociaux"}
+        </button>
+        {showSocialMediaUploader && <SocialMediaUploader />}
+      </>
+    );
+  };
+
   return (
     <div className="container mt-5 col-10 col-sm-8 col-md-6 col-lg-5 ">
       <div className="text-center mb-5 ">
@@ -208,6 +240,7 @@ const Admin = () => {
         {renderAboutUploader()}
         {renderReviewManagement()}
         {renderContactManagement()}
+        {renderSocialMediaUploader()}
       </div>
       <br />
       <div className="d-flex justify-content-center">

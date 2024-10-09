@@ -1,4 +1,5 @@
 import React from "react";
+import SocialMediaViewer from "./socialMediaViewer";
 
 const Footer = () => {
   return (
@@ -12,6 +13,7 @@ const Footer = () => {
             <p className="text-center">
               <strong>D</strong>udin <strong>I</strong>ngrid -{" "}
               <strong>VI</strong>trail et <strong>MO</strong>saïque
+              <SocialMediaViewer />
             </p>
           </div>
         </div>

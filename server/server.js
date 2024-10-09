@@ -23,6 +23,8 @@ const reviewRoutes = require("./routes/review");
 const categoryRoutes = require("./routes/category");
 // get the contact routes
 const contactRoutes = require("./routes/contact");
+// get the social media routes
+const socialMediaRoutes = require("./routes/socialMedia");
 
 // middleware
 app.use(json({ limit: "10mb" }));
@@ -64,6 +66,9 @@ app.use("/api", categoryRoutes);
 
 // contact routes
 app.use("/api", contactRoutes);
+
+// social media routes
+app.use("/api", socialMediaRoutes);
 
 // serve the react app
 app.get("*", (req, res) => {
