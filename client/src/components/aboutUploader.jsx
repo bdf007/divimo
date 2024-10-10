@@ -35,7 +35,10 @@ const AboutUploader = ({ onUpdate }) => {
           <div className="col-md-6 col-lg-4 mb-4" key={about._id}>
             <div className="card h-100">
               <div className="card-body">
-                <h5 className="card-title">{about.title}</h5>
+                <h5
+                  className="card-title"
+                  dangerouslySetInnerHTML={{ __html: about.title }}
+                ></h5>
                 <p
                   className="card-text"
                   dangerouslySetInnerHTML={{ __html: about.description }}
@@ -194,7 +197,7 @@ const AboutUploader = ({ onUpdate }) => {
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="title">Title</label>
-              <input
+              <textarea
                 type="text"
                 className="form-control"
                 id="title"
@@ -203,10 +206,7 @@ const AboutUploader = ({ onUpdate }) => {
               />
 
               <label htmlFor="description">Description</label>
-              <MyTextEditor
-                description={description}
-                setDescription={setDescription}
-              />
+              <MyTextEditor text={description} setText={setDescription} />
 
               <label htmlFor="photo">Photo</label>
               <input

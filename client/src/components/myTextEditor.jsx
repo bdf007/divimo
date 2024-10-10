@@ -2,11 +2,11 @@ import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Style par défaut de Quill
 
-const MyTextEditor = ({ description, setDescription }) => {
+const MyTextEditor = ({ text, setText }) => {
   return (
     <ReactQuill
-      value={description}
-      onChange={setDescription}
+      value={text}
+      onChange={setText}
       modules={{
         toolbar: [
           [{ header: "1" }, { header: "2" }, { font: [] }],
