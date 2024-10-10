@@ -18,7 +18,7 @@ const {
 const { verifyToken } = require("../middlewares/auth");
 
 // api routes
-router.post("/vitrail/create", createVitrail);
+router.post("/vitrail/create", verifyToken, createVitrail);
 router.get("/vitrails", getAllVitrails);
 router.get("/vitrail/carousel", getVitrailCarousel);
 router.get("/vitrail/carouselRandom", getVitrailCarouselRandom);

@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import AboutUploader from "../components/aboutUploader";
+import ColorfulTitle from "../components/getRandomColor";
 
 const About = () => {
   const { user } = useContext(UserContext);
@@ -50,10 +51,13 @@ const About = () => {
     ) : (
       <div>
         <div className="text-center mb-5">
-          <h1>{activeAbout.title}</h1>
+          <h1 style={{ whiteSpace: "pre-wrap" }}>
+            <ColorfulTitle texte={activeAbout.title} />
+          </h1>
         </div>
+
         <div className="form-group mb-3">
-          <p>{activeAbout.description}</p>
+          <p dangerouslySetInnerHTML={{ __html: activeAbout.description }}></p>
         </div>
       </div>
     );

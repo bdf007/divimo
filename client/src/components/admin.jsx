@@ -56,7 +56,7 @@ const Admin = () => {
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le ContactManagement
-    setShowAboutUploader(false); // Masque le AboutUploader
+    setShowSocialMediaUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du UserManagement
@@ -67,7 +67,7 @@ const Admin = () => {
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le ContactManagement
-    setShowAboutUploader(false); // Masque le AboutUploader
+    setShowSocialMediaUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du ReviewManagement
@@ -78,7 +78,7 @@ const Admin = () => {
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le Contact
-    setShowAboutUploader(false); // Masque le AboutUploader
+    setShowSocialMediaUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du AboutUploader
@@ -89,7 +89,7 @@ const Admin = () => {
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le ContactManagement
-    setShowAboutUploader(false); // Masque le AboutUploader
+    setShowSocialMediaUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du CategoryUploader
@@ -100,7 +100,7 @@ const Admin = () => {
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowContactManagement(false); // Masque le ContactManagement
-    setShowAboutUploader(false); // Masque le AboutUploader
+    setShowSocialMediaUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du ContactManagement
@@ -111,7 +111,7 @@ const Admin = () => {
     setShowReviewManagement(false); // Masque le ReviewManagement
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
-    setShowAboutUploader(false); // Masque le AboutUploader
+    setShowSocialMediaUploader(false); // Masque le AboutUploader
   };
 
   // Fonction pour basculer l'état d'affichage du SocialMediaUploader
@@ -125,14 +125,82 @@ const Admin = () => {
     setShowContactManagement(false); // Masque le ContactManagement
   };
 
-  const rendervitrailUploader = () => {
+  const renderButtons = () => {
     return (
       <>
-        <button className="btn btn-primary" onClick={toggleUploader}>
+        <button
+          className={`btn ${showUploader ? "btn-warning" : "btn-primary"}`}
+          onClick={toggleUploader}
+        >
           {showUploader
             ? "masquer l'ajour de vitrail"
             : "Afficher l'ajout de vitrail"}
         </button>
+        <button
+          className={`btn ${
+            showUserManagement ? "btn-warning" : "btn-primary"
+          }`}
+          onClick={toggleUserManagement}
+        >
+          {showUserManagement
+            ? "masquer la gestion des utilisateurs"
+            : "Afficher la gestion des utilisateurs"}
+        </button>
+        <button
+          className={`btn ${
+            showReviewManagement ? "btn-warning" : "btn-primary"
+          }`}
+          onClick={toggleReviewManagement}
+        >
+          {showReviewManagement
+            ? "masquer la gestion des avis"
+            : "Afficher la gestion des avis"}
+        </button>
+        <button
+          className={`btn ${showAboutUploader ? "btn-warning" : "btn-primary"}`}
+          onClick={toggleAboutUploader}
+        >
+          {showAboutUploader
+            ? "masquer l'ajout de la section À propos"
+            : "Afficher l'ajout de la section À propos"}
+        </button>
+        <button
+          className={`btn ${
+            showCategoryUploader ? "btn-warning" : "btn-primary"
+          }`}
+          onClick={toggleCategoryUploader}
+        >
+          {showCategoryUploader
+            ? "masquer l'ajout de catégorie"
+            : "Afficher l'ajout de catégorie"}
+        </button>
+        <button
+          className={`btn ${
+            showContactManagement ? "btn-warning" : "btn-primary"
+          }`}
+          onClick={toggleContactManagement}
+        >
+          {showContactManagement
+            ? "masquer la gestion des messages"
+            : "Afficher la gestion des messages"}
+        </button>
+        <button
+          className={`btn ${
+            showSocialMediaUploader ? "btn-warning" : "btn-primary"
+          }`}
+          onClick={toggleSocialMediaUploader}
+        >
+          {showSocialMediaUploader
+            ? "masquer l'ajout de médias sociaux"
+            : "Afficher l'ajout de médias sociaux"}
+        </button>
+      </>
+    );
+  };
+
+  const rendervitrailUploader = () => {
+    return (
+      <>
         {showUploader && (
           <div className="uploader-container">
             <VitrailCaroussel />
@@ -144,26 +212,12 @@ const Admin = () => {
   };
 
   const renderUserManagement = () => {
-    return (
-      <>
-        <button className="btn btn-primary" onClick={toggleUserManagement}>
-          {showUserManagement
-            ? "masquer la gestion des utilisateurs"
-            : "Afficher la gestion des utilisateurs"}
-        </button>
-        {showUserManagement && <UserManagement />}
-      </>
-    );
+    return <>{showUserManagement && <UserManagement />}</>;
   };
 
   const renderReviewManagement = () => {
     return (
       <>
-        <button className="btn btn-primary" onClick={toggleReviewManagement}>
-          {showReviewManagement
-            ? "masquer la gestion des avis"
-            : "Afficher la gestion des avis"}
-        </button>
         {showReviewManagement && (
           <div className="uploader-container">
             <ReviewCarousel />
@@ -175,72 +229,51 @@ const Admin = () => {
   };
 
   const renderAboutUploader = () => {
-    return (
-      <>
-        <button className="btn btn-primary" onClick={toggleAboutUploader}>
-          {showAboutUploader
-            ? "masquer l'ajout de la section À propos"
-            : "Afficher l'ajout de la section À propos"}
-        </button>
-        {showAboutUploader && <AboutUploader />}
-      </>
-    );
+    return <>{showAboutUploader && <AboutUploader />}</>;
   };
 
   const renderCategoryUploader = () => {
-    return (
-      <>
-        <button className="btn btn-primary" onClick={toggleCategoryUploader}>
-          {showCategoryUploader
-            ? "masquer l'ajout de catégorie"
-            : "Afficher l'ajout de catégorie"}
-        </button>
-        {showCategoryUploader && <CategoryUploader />}
-      </>
-    );
+    return <>{showCategoryUploader && <CategoryUploader />}</>;
   };
 
   const renderContactManagement = () => {
-    return (
-      <>
-        <button className="btn btn-primary" onClick={toggleContactManagement}>
-          {showContactManagement
-            ? "masquer la gestion des messages"
-            : "Afficher la gestion des messages"}
-        </button>
-        {showContactManagement && <ContactManagement />}
-      </>
-    );
+    return <>{showContactManagement && <ContactManagement />}</>;
   };
 
   const renderSocialMediaUploader = () => {
-    return (
-      <>
-        <button className="btn btn-primary" onClick={toggleSocialMediaUploader}>
-          {showSocialMediaUploader
-            ? "masquer l'ajout de médias sociaux"
-            : "Afficher l'ajout de médias sociaux"}
-        </button>
-        {showSocialMediaUploader && <SocialMediaUploader />}
-      </>
-    );
+    return <>{showSocialMediaUploader && <SocialMediaUploader />}</>;
   };
 
   return (
-    <div className="container mt-5 col-10 col-sm-8 col-md-6 col-lg-5 ">
-      <div className="text-center mb-5 ">
-        <h4>
-          Welcome, {user.username}
-          <span> </span>
-          Role: {user.role}
-        </h4>
-        {renderUserManagement()}
-        {renderCategoryUploader()}
-        {rendervitrailUploader()}
-        {renderAboutUploader()}
-        {renderReviewManagement()}
-        {renderContactManagement()}
-        {renderSocialMediaUploader()}
+    <div className="container-fluid mt-5">
+      <h4 className="text-center">
+        Welcome, {user.username}
+        <span> </span>
+        Role: {user.role}
+      </h4>
+      <h1 className="text-center">Admin Panel</h1>
+      <div className="row">
+        {/* Section des boutons */}
+        <div
+          className="col-md-3 col-12 mb-3"
+          style={{ paddingLeft: "2rem", paddingRight: "5rem" }}
+        >
+          <div className="d-flex flex-column">{renderButtons()}</div>
+        </div>
+
+        {/* Section de contenu */}
+        <div className="col-md-9 col-12" style={{ paddingRight: "5rem" }}>
+          <div className="content">
+            {/* Affichez le composant approprié en fonction de l'état */}
+            {renderUserManagement()}
+            {renderCategoryUploader()}
+            {rendervitrailUploader()}
+            {renderAboutUploader()}
+            {renderReviewManagement()}
+            {renderContactManagement()}
+            {renderSocialMediaUploader()}
+          </div>
+        </div>
       </div>
       <br />
       <div className="d-flex justify-content-center">

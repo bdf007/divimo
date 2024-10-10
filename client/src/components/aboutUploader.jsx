@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
+import MyTextEditor from "./myTextEditor";
 
 const AboutUploader = ({ onUpdate }) => {
   // Récupère la prop onUpdate
@@ -35,7 +36,10 @@ const AboutUploader = ({ onUpdate }) => {
             <div className="card h-100">
               <div className="card-body">
                 <h5 className="card-title">{about.title}</h5>
-                <p className="card-text">{about.description}</p>
+                <p
+                  className="card-text"
+                  dangerouslySetInnerHTML={{ __html: about.description }}
+                ></p>
                 <p>
                   actif:{" "}
                   <span style={{ color: about.activeAbout ? "blue" : "red" }}>
@@ -74,12 +78,21 @@ const AboutUploader = ({ onUpdate }) => {
 
   const updateAbout = async (id) => {
     axios
-      .put(`${process.env.REACT_APP_API_URL}/api/about/update/${id}`, {
-        title,
-        description,
-        photo,
-        activeAbout,
-      })
+      .put(
+        `${process.env.REACT_APP_API_URL}/api/about/update/${id}`,
+        {
+          title,
+          description,
+          photo,
+          activeAbout,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+          withCredentials: true,
+        }
+      )
       .then(() => {
         toast.success("About updated");
         setEditingAboutId(null);
@@ -95,12 +108,21 @@ const AboutUploader = ({ onUpdate }) => {
 
   const createAbout = async () => {
     axios
-      .post(`${process.env.REACT_APP_API_URL}/api/about/create`, {
-        title,
-        description,
-        photo,
-        activeAbout,
-      })
+      .post(
+        `${process.env.REACT_APP_API_URL}/api/about/create`,
+        {
+          title,
+          description,
+          photo,
+          activeAbout,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+          withCredentials: true,
+        }
+      )
       .then(() => {
         toast.success("About created");
         getAbouts();
@@ -115,7 +137,12 @@ const AboutUploader = ({ onUpdate }) => {
 
   const deleteAbout = async (id) => {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/api/about/delete/${id}`)
+      .delete(`${process.env.REACT_APP_API_URL}/api/about/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+        withCredentials: true,
+      })
       .then(() => {
         toast.success("About deleted");
         getAbouts();
@@ -153,7 +180,7 @@ const AboutUploader = ({ onUpdate }) => {
   return (
     user &&
     (user.role === "admin" || user.role === "superadmin") && (
-      <div className="container mt-5">
+      <div className="container-fluid mt-5">
         <h1>About uploader</h1>
         {!editingAboutId && (
           <button
@@ -176,12 +203,10 @@ const AboutUploader = ({ onUpdate }) => {
               />
 
               <label htmlFor="description">Description</label>
-              <textarea
-                className="form-control"
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
+              <MyTextEditor
+                description={description}
+                setDescription={setDescription}
+              />
 
               <label htmlFor="photo">Photo</label>
               <input

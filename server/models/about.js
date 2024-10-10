@@ -6,7 +6,7 @@ const aboutSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxlength: 32,
+      maxlength: 100,
     },
     description: {
       type: String,

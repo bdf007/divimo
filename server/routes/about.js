@@ -15,11 +15,11 @@ const {
 const { verifyToken } = require("../middlewares/auth");
 
 // api routes
-router.post("/about/create", createAbout);
+router.post("/about/create", verifyToken, createAbout);
 router.get("/abouts", getAllAbouts);
 router.get("/activeAbout", getAboutActive);
-router.put("/about/update/:id", updateAbout);
-router.delete("/about/delete/:id", deleteAbout);
+router.put("/about/update/:id", verifyToken, updateAbout);
+router.delete("/about/delete/:id", verifyToken, deleteAbout);
 router.get("/about/:id", getAboutById);
 
 module.exports = router;

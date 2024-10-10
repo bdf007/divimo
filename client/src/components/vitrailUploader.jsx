@@ -149,7 +149,13 @@ const VitrailUploader = () => {
 
       const res = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/vitrail/create`,
-        vitrailData
+        vitrailData,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+          withCredentials: true,
+        }
       );
 
       toast.success("Vitrail created successfully", res.data.message);
@@ -370,6 +376,59 @@ const VitrailUploader = () => {
       </form>
     );
   };
+
+  const renderVitrailList = () => {
+    return (
+      <>
+        <h2>list of vitrails</h2>
+        {!listOfVitrails || listOfVitrails.length === 0 ? (
+          <h1>Loading...</h1>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+              gap: "16px",
+            }}
+          >
+            {listOfVitrails.map((vitrail) => (
+              <div
+                key={vitrail._id}
+                style={{
+                  border: "1px solid #ccc",
+                  padding: "8px",
+                  borderRadius: "4px",
+                }}
+              >
+                <h3>{vitrail.title}</h3>
+                {vitrail.photo && (
+                  <img
+                    src={vitrail.photo}
+                    alt={vitrail.title}
+                    style={{ width: "100%", height: "auto", cursor: "pointer" }} // Ajoute un curseur pour indiquer que l'image est cliquable
+                    onClick={() => openVitrailPopup(vitrail)} // Ouvre le popup lors du clic sur l'image
+                  />
+                )}
+                <button
+                  className="btn btn-warning"
+                  onClick={() => openVitrailPopup(vitrail)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => deleteVitrail(vitrail._id)}
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </>
+    );
+  };
+
   useEffect(() => {
     getListOfVitrails();
     getListOfCategories();
@@ -384,46 +443,7 @@ const VitrailUploader = () => {
         {formIsVisible ? "Masquer l'uploader" : "afficher l'uploader"}
       </button>
       {user && formIsVisible && renderUploadForm()}
-      <h2>list of vitrails</h2>
-      {!listOfVitrails || listOfVitrails.length === 0 ? (
-        <h1>Loading...</h1>
-      ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-            gap: "16px",
-          }}
-        >
-          {listOfVitrails.map((vitrail) => (
-            <div
-              key={vitrail._id}
-              style={{
-                border: "1px solid #ccc",
-                padding: "8px",
-                borderRadius: "4px",
-              }}
-            >
-              <h3>{vitrail.title}</h3>
-              {vitrail.photo && (
-                <img
-                  src={vitrail.photo}
-                  alt={vitrail.title}
-                  style={{ width: "100%", height: "auto", cursor: "pointer" }} // Ajoute un curseur pour indiquer que l'image est cliquable
-                  onClick={() => openVitrailPopup(vitrail)} // Ouvre le popup lors du clic sur l'image
-                />
-              )}
-
-              <button
-                className="btn btn-danger"
-                onClick={() => deleteVitrail(vitrail._id)}
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
+      {user && !formIsVisible && renderVitrailList()}
       {isOpenPopup && selectedVitrail && (
         <VitrailPopup
           vitrail={selectedVitrail}
