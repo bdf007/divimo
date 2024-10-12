@@ -16,6 +16,7 @@ const VitrailUploader = () => {
   const [dimension, setDimension] = useState("");
   // const [shipping, setShipping] = useState(false);
   // const [sold, setSold] = useState(0);
+  const [otherCategory, setOtherCategory] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [listOfVitrails, setListOfVitrails] = useState([]);
   const [listOfCategories, setListOfCategories] = useState([]);
@@ -137,7 +138,7 @@ const VitrailUploader = () => {
         title,
         description,
         price,
-        category,
+        category: category === "Autre" ? otherCategory : category,
         carousel,
         visible,
         quantity,
@@ -146,6 +147,32 @@ const VitrailUploader = () => {
         // shipping,
         // sold,
       };
+
+      const categoryVisible = visible;
+      if (otherCategory) {
+        axios
+          .post(
+            `${process.env.REACT_APP_API_URL}/api/category/create`,
+            {
+              name: otherCategory,
+              description: "",
+              visible: categoryVisible,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+              withCredentials: true,
+            }
+          )
+          .then(() => {
+            toast.success("Category created successfully");
+          })
+          .catch((error) => {
+            console.error("Error creating category:", error);
+            toast.error("Error creating category");
+          });
+      }
 
       const res = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/vitrail/create`,
@@ -185,7 +212,15 @@ const VitrailUploader = () => {
   };
 
   const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
+    const selectedValue = e.target.value;
+    setCategory(selectedValue);
+    if (selectedValue === "Autre") {
+      setOtherCategory(""); // Réinitialiser l'input si "Autre" est sélectionné
+    }
+  };
+
+  const handleOtherCategoryChange = (e) => {
+    setOtherCategory(e.target.value);
   };
 
   const handleCarouselChange = (e) => {
@@ -289,9 +324,22 @@ const VitrailUploader = () => {
                 {category.name}
               </option>
             ))}
+            <option value="Autre">Autre</option>
           </select>
         </div>
-
+        {category === "Autre" && ( // Afficher l'input si "Autre" est sélectionné
+          <div className="form-group">
+            <label htmlFor="otherCategory">Nouvelle Catégorie</label>
+            <input
+              type="text"
+              id="otherCategory"
+              className="form-control"
+              placeholder="Entrez la nouvelle catégorie"
+              value={otherCategory}
+              onChange={handleOtherCategoryChange}
+            />
+          </div>
+        )}
         <div className="form-group">
           <div style={{ display: "flex", alignItems: "center" }}>
             <label htmlFor="carousel">Carousel</label>

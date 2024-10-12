@@ -80,10 +80,11 @@ const Category = ({ category }) => {
                   padding: "8px",
                   borderRadius: "4px",
                 }}
-                className="vitrail-card"
+                className="vitrail-card card"
               >
                 {vitrail.photo && (
                   <img
+                    className="card-img-top"
                     src={vitrail.photo}
                     alt={vitrail.title}
                     aria-label={`Voir détails de ${vitrail.title}`}
@@ -95,7 +96,9 @@ const Category = ({ category }) => {
                     onClick={() => openVitrailPopup(vitrail)} // Ouvre le popup lors du clic sur l'image
                   />
                 )}
-                <p>{vitrail.title}</p>
+                <div className="card-body">
+                  <h5 className="card-title">{vitrail.title}</h5>
+                </div>
               </div>
             ))}
           </div>
