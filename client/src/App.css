@@ -181,6 +181,10 @@ main {
 }
 
 @media screen and (max-width: 768px) {
+  .vitrail-caroussel {
+    padding: 0 1rem;
+    align-items: flex-start;
+  }
   /* Agrandir les images du carousel sur mobile */
   .vitrail-caroussel img {
     max-width: 100%; /* Réduit le max-width pour être plus grand sur mobile */
