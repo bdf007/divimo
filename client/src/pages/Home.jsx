@@ -5,6 +5,7 @@ import Admin from "../components/admin";
 import ReviewCarousel from "../components/reviewCaroussel";
 import About from "../pages/About.jsx";
 import ColorfulTitle from "../components/getRandomColor.jsx";
+import RandomShadow from "../components/getRandomShadowLetter.jsx";
 
 const Home = () => {
   const { user } = useContext(UserContext);
@@ -21,9 +22,8 @@ const Home = () => {
             />
           </h1>
         ) : (
-          // <h1 style={{ marginTop: "20px" }}>Bienvenue sur DI VIMO</h1> // Affichage par défaut si l'utilisateur n'est pas connecté
           <h1 style={{ marginTop: "20px" }}>
-            <ColorfulTitle texte="Bienvenue sur DI VIMO" />
+            <RandomShadow texte="Bienvenue sur DI VIMO" />
           </h1>
         )}
         <p>

@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import AboutUploader from "../components/aboutUploader";
-import ColorfulTitle from "../components/getRandomColor";
+// import ColorfulTitle from "../components/getRandomColor";
+import RandomShadow from "../components/getRandomShadowLetter";
 
 const About = () => {
   const { user } = useContext(UserContext);
@@ -52,7 +53,7 @@ const About = () => {
       <div>
         <div className="text-center mb-5">
           <h1 style={{ whiteSpace: "pre-wrap" }}>
-            <ColorfulTitle texte={activeAbout.title} />
+            <RandomShadow texte={activeAbout.title} />
           </h1>
         </div>
 
