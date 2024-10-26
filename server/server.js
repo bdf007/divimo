@@ -25,6 +25,8 @@ const categoryRoutes = require("./routes/category");
 const contactRoutes = require("./routes/contact");
 // get the social media routes
 const socialMediaRoutes = require("./routes/socialMedia");
+// get the selling place routes
+const sellingPlaceRoutes = require("./routes/sellingPlace");
 
 // middleware
 app.use(json({ limit: "10mb" }));
@@ -69,6 +71,9 @@ app.use("/api", contactRoutes);
 
 // social media routes
 app.use("/api", socialMediaRoutes);
+
+// selling place routes
+app.use("/api", sellingPlaceRoutes);
 
 // serve the react app
 app.get("*", (req, res) => {

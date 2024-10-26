@@ -12,6 +12,7 @@ import AboutUploader from "./aboutUploader";
 import CategoryUploader from "./categoryUploader";
 import ContactManagement from "./contactManagement";
 import SocialMediaUploader from "./socialMediaUploader";
+import SellingPlaceUploader from "./sellingPlaceUploader";
 
 const Admin = () => {
   const { user, setUser } = useContext(UserContext);
@@ -23,6 +24,8 @@ const Admin = () => {
   const [showCategoryUploader, setShowCategoryUploader] = useState(false); // État pour afficher/masquer CategoryUploader
   const [showContactManagement, setShowContactManagement] = useState(false); // État pour afficher/masquer ContactManagement
   const [showSocialMediaUploader, setShowSocialMediaUploader] = useState(false); // État pour afficher/masquer SocialMediaUploader
+  const [showSellingPlaceUploader, setShowSellingPlaceUploader] =
+    useState(false); // État pour afficher/masquer SellingPlaceUploader
 
   const navigate = useNavigate();
 
@@ -57,6 +60,7 @@ const Admin = () => {
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le ContactManagement
     setShowSocialMediaUploader(false); // Masque le AboutUploader
+    setShowSellingPlaceUploader(false); // Masque le SellingPlaceUploader
   };
 
   // Fonction pour basculer l'état d'affichage du UserManagement
@@ -68,6 +72,7 @@ const Admin = () => {
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le ContactManagement
     setShowSocialMediaUploader(false); // Masque le AboutUploader
+    setShowSellingPlaceUploader(false); // Masque le SellingPlaceUploader
   };
 
   // Fonction pour basculer l'état d'affichage du ReviewManagement
@@ -79,6 +84,7 @@ const Admin = () => {
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le Contact
     setShowSocialMediaUploader(false); // Masque le AboutUploader
+    setShowSellingPlaceUploader(false); // Masque le SellingPlaceUploader
   };
 
   // Fonction pour basculer l'état d'affichage du AboutUploader
@@ -90,6 +96,7 @@ const Admin = () => {
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le ContactManagement
     setShowSocialMediaUploader(false); // Masque le AboutUploader
+    setShowSellingPlaceUploader(false); // Masque le SellingPlaceUploader
   };
 
   // Fonction pour basculer l'état d'affichage du CategoryUploader
@@ -101,6 +108,7 @@ const Admin = () => {
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowContactManagement(false); // Masque le ContactManagement
     setShowSocialMediaUploader(false); // Masque le AboutUploader
+    setShowSellingPlaceUploader(false); // Masque le SellingPlaceUploader
   };
 
   // Fonction pour basculer l'état d'affichage du ContactManagement
@@ -112,6 +120,7 @@ const Admin = () => {
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowSocialMediaUploader(false); // Masque le AboutUploader
+    setShowSellingPlaceUploader(false); // Masque le SellingPlaceUploader
   };
 
   // Fonction pour basculer l'état d'affichage du SocialMediaUploader
@@ -123,6 +132,19 @@ const Admin = () => {
     setShowAboutUploader(false); // Masque le AboutUploader
     setShowCategoryUploader(false); // Masque le CategoryUploader
     setShowContactManagement(false); // Masque le ContactManagement
+    setShowSellingPlaceUploader(false); // Masque le SellingPlaceUploader
+  };
+
+  // Fonction pour basculer l'état d'affichage du SellingPlaceUploader
+  const toggleSellingPlaceUploader = () => {
+    setShowSellingPlaceUploader((prev) => !prev);
+    setShowUploader(false); // Masque le VitrailUploader
+    setShowUserManagement(false); // Masque le UserManagement
+    setShowReviewManagement(false); // Masque le ReviewManagement
+    setShowAboutUploader(false); // Masque le AboutUploader
+    setShowCategoryUploader(false); // Masque le CategoryUploader
+    setShowContactManagement(false); // Masque le ContactManagement
+    setShowSocialMediaUploader(false); // Masque le SocialMediaUploader
   };
 
   const renderButtons = () => {
@@ -194,6 +216,16 @@ const Admin = () => {
             ? "masquer l'ajout de médias sociaux"
             : "Afficher l'ajout de médias sociaux"}
         </button>
+        <button
+          className={`btn ${
+            showSellingPlaceUploader ? "btn-warning" : "btn-primary"
+          }`}
+          onClick={toggleSellingPlaceUploader}
+        >
+          {showSellingPlaceUploader
+            ? "masquer l'ajout de lieu de vente"
+            : "Afficher l'ajout de lieu de vente"}
+        </button>
       </>
     );
   };
@@ -244,6 +276,10 @@ const Admin = () => {
     return <>{showSocialMediaUploader && <SocialMediaUploader />}</>;
   };
 
+  const renderSellingPlaceUploader = () => {
+    return <>{showSellingPlaceUploader && <SellingPlaceUploader />}</>;
+  };
+
   return (
     <div className="container-fluid mt-5">
       <h4 className="text-center">
@@ -272,6 +308,7 @@ const Admin = () => {
             {renderReviewManagement()}
             {renderContactManagement()}
             {renderSocialMediaUploader()}
+            {renderSellingPlaceUploader()}
           </div>
         </div>
       </div>

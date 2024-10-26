@@ -44,6 +44,7 @@ exports.getCategoriesVisibleAndWithCountNotZero = async (req, res) => {
       categories.map(async (category) => {
         const count = await Vitrail.find({
           category: category.name,
+          visible: true,
         }).countDocuments();
         return { ...category._doc, count };
       })

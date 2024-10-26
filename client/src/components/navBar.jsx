@@ -13,6 +13,7 @@ const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
   const [logoutMessage, setLogoutMessage] = useState("");
   const [listOfCategories, setListOfCategories] = useState([]);
+  const [isSellingPlaceVisible, setIsSellingPlaceVisible] = useState(false);
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -39,8 +40,20 @@ const NavBar = () => {
       });
   };
 
+  const isThereSellingPlaceVisible = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/sellingPlaces/isVisible`)
+      .then((response) => {
+        setIsSellingPlaceVisible(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching selling places:", error);
+      });
+  };
+
   useEffect(() => {
     getCategories();
+    isThereSellingPlaceVisible();
   }, []);
 
   const renderCategories = () => {
@@ -69,6 +82,17 @@ const NavBar = () => {
     );
   };
 
+  const renderWhereToFindMe = () => {
+    if (!isSellingPlaceVisible) return null; // Ne pas afficher si aucun lieu de vente visible
+    return (
+      <li className="nav-item">
+        <Link className="nav-link" to="/SellingPlace">
+          Ou me trouver
+        </Link>
+      </li>
+    );
+  };
+
   const renderNoUser = () => {
     return (
       <>
@@ -78,11 +102,8 @@ const NavBar = () => {
             A propos
           </Link>
         </li> */}
-        <li className="nav-item">
-          <Link className="nav-link" to="/Review">
-            Avis
-          </Link>
-        </li>
+
+        {renderWhereToFindMe()}
         <li className="nav-item">
           <Link className="nav-link" to="/Contact">
             Contact
@@ -116,6 +137,15 @@ const NavBar = () => {
             A propos
           </Link>
         </li> */}
+        {user.role === "user" ? (
+          renderWhereToFindMe()
+        ) : (
+          <li className="nav-item">
+            <Link className="nav-link" to="/SellingPlace">
+              Ou me trouver
+            </Link>
+          </li>
+        )}
         {user.role !== "admin" && user.role !== "superadmin" && (
           <>
             <li className="nav-item">
