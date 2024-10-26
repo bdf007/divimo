@@ -21,6 +21,7 @@ import Profil from "./pages/Profil";
 import Review from "./pages/Review";
 import Category from "./pages/Category";
 import Contact from "./pages/Contact";
+import SellingPlace from "./pages/SellingPlace";
 
 // components
 import NavBar from "./components/navBar";
@@ -83,6 +84,7 @@ function App() {
                   element={<Category category={category.name} />}
                 />
               ))}
+              <Route path="/sellingPlace" element={<SellingPlace />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
               <Route path="/about" element={<About />} />

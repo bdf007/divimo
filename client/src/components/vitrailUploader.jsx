@@ -435,7 +435,7 @@ const VitrailUploader = () => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
               gap: "16px",
             }}
           >
@@ -457,6 +457,39 @@ const VitrailUploader = () => {
                     onClick={() => openVitrailPopup(vitrail)} // Ouvre le popup lors du clic sur l'image
                   />
                 )}
+                {vitrail.description && (
+                  <p>Description: {vitrail.description}</p>
+                )}
+                {vitrail.price > 0 && <p>Prix : {vitrail.price}€</p>}
+                {vitrail.quantity > 0 && (
+                  <p>Quantité disponible: {vitrail.quantity}</p>
+                )}
+                <p>Catégorie: {vitrail.category}</p>
+                <p>
+                  {vitrail.carousel
+                    ? "dans le carousel"
+                    : "pas dans le carousel"}
+                </p>
+                <p>
+                  {vitrail.visible
+                    ? "visible dans les catégories"
+                    : "pas visible dans les catégories"}
+                </p>
+                <p>
+                  {new Date(vitrail.createdAt).toLocaleDateString("fr-FR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+                <p>
+                  {new Date(vitrail.updatedAt).toLocaleDateString("fr-FR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+
                 <button
                   className="btn btn-warning"
                   onClick={() => openVitrailPopup(vitrail)}

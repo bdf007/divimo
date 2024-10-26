@@ -13,6 +13,7 @@ const SocialMediaUploader = () => {
   const [listOfMedias, setListOfMedias] = useState([]);
   const [editingSocialMediaId, setEditingSocialMediaId] = useState(null);
   const [visibleUpload, setVisibleUpload] = useState(false);
+  const [currentPhoto, setCurrentPhoto] = useState(null);
   const fileInputRef = useRef(null);
 
   const getListOfsocialMedia = async () => {
@@ -32,6 +33,7 @@ const SocialMediaUploader = () => {
     setUrl(socialMedia.url);
     setVisible(socialMedia.visible);
     setEditingSocialMediaId(socialMedia._id);
+    setCurrentPhoto(socialMedia.photo);
     setVisibleUpload(true);
   };
 
@@ -41,6 +43,7 @@ const SocialMediaUploader = () => {
     setUrl("");
     setVisible(false);
     setSelectedFile(null);
+    setCurrentPhoto(null);
     setEditingSocialMediaId(null);
     setVisibleUpload(false);
     if (fileInputRef.current) {
@@ -51,8 +54,9 @@ const SocialMediaUploader = () => {
   const handleUploadSocialMedia = async (e) => {
     e.preventDefault();
     try {
+      let base64Data = currentPhoto;
       const fileReader = new FileReader();
-      const base64Data = await new Promise((resolve, reject) => {
+      base64Data = await new Promise((resolve, reject) => {
         fileReader.onload = () => resolve(fileReader.result);
         fileReader.onerror = reject;
         fileReader.readAsDataURL(selectedFile);
@@ -114,14 +118,24 @@ const SocialMediaUploader = () => {
               {editingSocialMediaId ? "Modifier" : "Uploader"} un réseau social
             </h1>
             <div className="form-group">
-              <label htmlFor="file">Photo</label>
-              <input
-                type="file"
-                id="file"
-                accept="image/*"
-                onChange={(e) => setSelectedFile(e.target.files[0])}
-                ref={fileInputRef}
-              />
+              {editingSocialMediaId && currentPhoto ? (
+                <img
+                  src={currentPhoto}
+                  alt="Aperçu"
+                  style={{ width: "10rem", height: "auto" }}
+                />
+              ) : (
+                <>
+                  <label htmlFor="file">Photo</label>
+                  <input
+                    type="file"
+                    id="file"
+                    accept="image/*"
+                    onChange={(e) => setSelectedFile(e.target.files[0])}
+                    ref={fileInputRef}
+                  />
+                </>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="title">Titre</label>
